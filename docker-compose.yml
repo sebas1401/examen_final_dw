@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  api:
+    build: ./server
+    container_name: restaurante-api
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      DATABASE_URL: "file:./dev.db"
+      FRONTEND_ORIGIN: "http://localhost:5173"
+      WORK_HOURS_START: "12:00"
+      WORK_HOURS_END: "22:00"
+      TIME_SLOT_MINUTES: 30
+
+  web:
+    build: ./client
+    container_name: restaurante-web
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: "http://api:4000/api"
+    depends_on:
+      - api

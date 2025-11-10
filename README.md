@@ -2,6 +2,14 @@
 
 Aplicación web full-stack para administrar mesas, clientes y reservas con disponibilidad en tiempo real. Incluye API REST en Node.js + Express y frontend React (Vite) con panel único para calendario, formulario de reserva y dashboard de ocupación.
 
+## Últimas mejoras aplicadas
+
+- **Diseño admin premium** con fondo animado, glassmorphism en secciones/cards y header + sidebar pegados (sticky) que incluyen dropdown de usuario con logout.
+- **Formulario “Nueva reserva”** reordenado en filas de máximo tres columnas, íconos descriptivos, placeholders claros, textarea amplio y botones asimétricos; los mensajes de éxito/error se muestran mediante modal centrado.
+- **Calendario admin** bloquea slots pasados, siempre valida en 12h, y autocompleta email/teléfono al reconocer nombres existentes; los avisos usan el portal compartido del cliente.
+- **Portal cliente y perfil** organizados con estadísticas, timeline con acciones (ver detalles/repetir), modales comunes y botón “+ Nueva reserva” funcional.
+- **API y backend** refinados: error handler captura validaciones Zod, las rutas de clientes están listas, y se refinaron servicios para notificaciones y autollenado.
+
 ## 🧱 Tecnologías clave
 
 - **Backend:** Node.js 22, Express 5, Prisma ORM, SQLite (dev) → adaptable a PostgreSQL

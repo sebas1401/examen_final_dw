@@ -126,23 +126,11 @@ Para capturas solicitadas crea la carpeta `docs/screenshots/` y guarda imágenes
 - `npm run preview` → Previsualiza build
 - `npm run lint` → Reglas por defecto de Vite + ESLint
 
-## 🗂️ Documentos
-
-- `docs/entregable.pdf` → Resumen solicitado (enlaza repo + instrucciones)
-- `docs/` queda listo para adjuntar capturas o reportes adicionales
-
 ## 🔐 Notas de seguridad
 
 - Usa variables de entorno para credenciales (ya excluidas del repo con `**/.env*`)
 - CORS restringido vía `FRONTEND_ORIGIN`
 - Validaciones de entrada en backend (Zod) + sanitización mínima en frontend
-
-## 🔭 Próximos pasos sugeridos
-
-1. Añadir autenticación y roles (host vs staff)
-2. Programar recordatorios vía cron / servicios externos
-3. Persistir historial de cambios y métricas (reportes semanales)
-4. Integrar un motor de email (Nodemailer) para confirmar reservas
 
 ---
 

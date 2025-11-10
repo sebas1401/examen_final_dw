@@ -8,8 +8,11 @@ const {
   deleteReserva,
   reservasDelDia,
 } = require('../controllers/reservaController');
+const { authenticateToken, authorizeRole } = require('../middleware/authMiddleware');
 
 const router = express.Router();
+
+router.use(authenticateToken, authorizeRole('ADMIN'));
 
 router.get('/', listReservas);
 router.get('/fecha/:fecha', reservasPorFecha);
@@ -20,4 +23,3 @@ router.put('/:id', updateReserva);
 router.delete('/:id', deleteReserva);
 
 module.exports = router;
-

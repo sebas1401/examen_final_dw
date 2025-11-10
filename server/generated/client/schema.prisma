@@ -22,13 +22,48 @@ model Mesa {
   reservas  Reserva[]
 }
 
+model Usuario {
+  id                Int      @id @default(autoincrement())
+  nombre            String
+  email             String   @unique
+  password          String
+  telefono          String
+  rol               Rol      @default(CLIENTE)
+  fechaRegistro     DateTime @default(now())
+  activo            Boolean  @default(true)
+  tokenRecuperacion String?
+  emailVerificado   Boolean  @default(false)
+  avatarUrl         String?
+  cliente           Cliente?
+  sesiones          Sesion[]
+}
+
+enum Rol {
+  ADMIN
+  CLIENTE
+}
+
+enum NivelCliente {
+  NUEVO
+  FRECUENTE
+  VIP
+}
+
 model Cliente {
-  id        Int       @id @default(autoincrement())
-  nombre    String
-  telefono  String
-  email     String?   @unique
-  reservas  Reserva[]
-  createdAt DateTime  @default(now())
+  id                 Int          @id @default(autoincrement())
+  usuarioId          Int          @unique
+  puntosFidelidad    Int          @default(0)
+  nivelCliente       NivelCliente @default(NUEVO)
+  preferencias       Json?
+  ultimaVisita       DateTime?
+  totalReservas      Int          @default(0)
+  reservasCanceladas Int          @default(0)
+  nombre             String?
+  telefono           String?
+  email              String?
+  usuario            Usuario      @relation(fields: [usuarioId], references: [id])
+  reservas           Reserva[]
+  createdAt          DateTime     @default(now())
 }
 
 enum EstadoReserva {
@@ -37,14 +72,24 @@ enum EstadoReserva {
   COMPLETADA
 }
 
+enum ZonaPreferida {
+  SIN_PREFERENCIA
+  TERRAZA
+  INTERIOR
+  VIP
+}
+
 model Reserva {
-  id             Int           @id @default(autoincrement())
-  clienteId      Int
-  mesaId         Int
-  fechaHora      DateTime
-  numeroPersonas Int
-  estado         EstadoReserva @default(CONFIRMADA)
-  createdAt      DateTime      @default(now())
+  id                Int           @id @default(autoincrement())
+  clienteId         Int
+  mesaId            Int
+  fechaHora         DateTime
+  numeroPersonas    Int
+  estado            EstadoReserva @default(CONFIRMADA)
+  comentarios       String?
+  preferenciaZona   ZonaPreferida @default(SIN_PREFERENCIA)
+  motivoCancelacion String?
+  createdAt         DateTime      @default(now())
 
   cliente Cliente @relation(fields: [clienteId], references: [id])
   mesa    Mesa    @relation(fields: [mesaId], references: [id])
@@ -52,4 +97,15 @@ model Reserva {
   @@unique([mesaId, fechaHora])
   @@index([fechaHora])
   @@index([clienteId])
+}
+
+model Sesion {
+  id              Int      @id @default(autoincrement())
+  usuarioId       Int
+  token           String   @unique
+  fechaCreacion   DateTime @default(now())
+  fechaExpiracion DateTime
+  ipAddress       String?
+  userAgent       String?
+  usuario         Usuario  @relation(fields: [usuarioId], references: [id])
 }

@@ -1,4 +1,4 @@
-export function StatCard({ label, value, caption }) {
+﻿export function StatCard({ label, value, caption }) {
   return (
     <div className="stat-card">
       <small>{label}</small>
@@ -7,4 +7,5 @@ export function StatCard({ label, value, caption }) {
     </div>
   );
 }
+
 

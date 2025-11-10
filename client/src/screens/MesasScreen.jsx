@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../services/api';
+import { mockMesas } from '../data/mockData';
 
 const initialForm = { numero: '', capacidad: '', ubicacion: 'Interior' };
 
@@ -9,12 +10,21 @@ export function MesasScreen() {
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState(initialForm);
   const [editingId, setEditingId] = useState(null);
+  const [error, setError] = useState('');
 
   async function fetchMesas() {
     setLoading(true);
-    const data = await api.getMesas();
-    setMesas(data);
-    setLoading(false);
+    try {
+      const data = await api.getMesas();
+      setMesas(data);
+      setError('');
+    } catch (err) {
+      console.error(err);
+      setMesas(mockMesas);
+      setError('Mostrando mesas de ejemplo porque la API no respondio');
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -24,7 +34,7 @@ export function MesasScreen() {
   function openModal(mesa) {
     if (mesa) {
       setForm({ numero: mesa.numero, capacidad: mesa.capacidad, ubicacion: mesa.ubicacion });
-      setEditingId(mesa.id);
+      setEditingId(mesa.id ?? mesa.numero);
     } else {
       setForm(initialForm);
       setEditingId(null);
@@ -34,19 +44,33 @@ export function MesasScreen() {
 
   async function handleSave(event) {
     event.preventDefault();
-    const payload = { numero: Number(form.numero), capacidad: Number(form.capacidad), ubicacion: form.ubicacion };
-    if (editingId) {
-      await api.updateMesa(editingId, payload);
-    } else {
-      await api.createMesa(payload);
+    const payload = {
+      numero: Number(form.numero),
+      capacidad: Number(form.capacidad),
+      ubicacion: form.ubicacion,
+    };
+    try {
+      if (editingId) {
+        await api.updateMesa(editingId, payload);
+      } else {
+        await api.createMesa(payload);
+      }
+      setModalOpen(false);
+      fetchMesas();
+    } catch (err) {
+      console.error(err);
+      setError('No fue posible guardar la mesa.');
     }
-    setModalOpen(false);
-    fetchMesas();
   }
 
   async function handleDelete(id) {
-    await api.deleteMesa(id);
-    fetchMesas();
+    try {
+      await api.deleteMesa(id);
+      fetchMesas();
+    } catch (err) {
+      console.error(err);
+      setError('No se pudo eliminar la mesa.');
+    }
   }
 
   return (
@@ -54,12 +78,13 @@ export function MesasScreen() {
       <div className="screen-title">
         <div>
           <p className="eyebrow">Control operativo</p>
-          <h2>Gestión de mesas</h2>
+          <h2>Gestion de mesas</h2>
         </div>
         <button className="btn btn-primary" type="button" onClick={() => openModal(null)}>
           + Nueva mesa
         </button>
       </div>
+      {error && <div className="alert error">{error}</div>}
       {loading ? (
         <div className="loading">Cargando...</div>
       ) : (
@@ -67,15 +92,15 @@ export function MesasScreen() {
           <table>
             <thead>
               <tr>
-                <th>Número</th>
+                <th>Numero</th>
                 <th>Capacidad</th>
-                <th>Ubicación</th>
+                <th>Ubicacion</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {mesas.map((mesa) => (
-                <tr key={mesa.id}>
+                <tr key={mesa.id ?? mesa.numero}>
                   <td>{mesa.numero}</td>
                   <td>{mesa.capacidad} personas</td>
                   <td>{mesa.ubicacion}</td>
@@ -83,7 +108,7 @@ export function MesasScreen() {
                     <button className="btn btn-secondary" type="button" onClick={() => openModal(mesa)}>
                       Editar
                     </button>
-                    <button className="btn btn-danger" type="button" onClick={() => handleDelete(mesa.id)}>
+                    <button className="btn btn-danger" type="button" onClick={() => handleDelete(mesa.id ?? mesa.numero)}>
                       Eliminar
                     </button>
                   </td>
@@ -99,7 +124,7 @@ export function MesasScreen() {
             <h3>{editingId ? 'Editar mesa' : 'Nueva mesa'}</h3>
             <form className="form-stack" onSubmit={handleSave}>
               <label className="field">
-                Número de mesa
+                Numero de mesa
                 <input value={form.numero} onChange={(e) => setForm({ ...form, numero: e.target.value })} required />
               </label>
               <label className="field">
@@ -107,7 +132,7 @@ export function MesasScreen() {
                 <input type="number" value={form.capacidad} onChange={(e) => setForm({ ...form, capacidad: e.target.value })} required />
               </label>
               <label className="field">
-                Ubicación
+                Ubicacion
                 <select value={form.ubicacion} onChange={(e) => setForm({ ...form, ubicacion: e.target.value })}>
                   <option>Interior</option>
                   <option>Terraza</option>

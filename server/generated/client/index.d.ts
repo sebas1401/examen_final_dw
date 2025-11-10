@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Mesa = $Result.DefaultSelection<Prisma.$MesaPayload>
 /**
+ * Model Usuario
+ * 
+ */
+export type Usuario = $Result.DefaultSelection<Prisma.$UsuarioPayload>
+/**
  * Model Cliente
  * 
  */
@@ -28,12 +33,34 @@ export type Cliente = $Result.DefaultSelection<Prisma.$ClientePayload>
  * 
  */
 export type Reserva = $Result.DefaultSelection<Prisma.$ReservaPayload>
+/**
+ * Model Sesion
+ * 
+ */
+export type Sesion = $Result.DefaultSelection<Prisma.$SesionPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const EstadoReserva: {
+  export const Rol: {
+  ADMIN: 'ADMIN',
+  CLIENTE: 'CLIENTE'
+};
+
+export type Rol = (typeof Rol)[keyof typeof Rol]
+
+
+export const NivelCliente: {
+  NUEVO: 'NUEVO',
+  FRECUENTE: 'FRECUENTE',
+  VIP: 'VIP'
+};
+
+export type NivelCliente = (typeof NivelCliente)[keyof typeof NivelCliente]
+
+
+export const EstadoReserva: {
   CONFIRMADA: 'CONFIRMADA',
   CANCELADA: 'CANCELADA',
   COMPLETADA: 'COMPLETADA'
@@ -41,11 +68,33 @@ export namespace $Enums {
 
 export type EstadoReserva = (typeof EstadoReserva)[keyof typeof EstadoReserva]
 
+
+export const ZonaPreferida: {
+  SIN_PREFERENCIA: 'SIN_PREFERENCIA',
+  TERRAZA: 'TERRAZA',
+  INTERIOR: 'INTERIOR',
+  VIP: 'VIP'
+};
+
+export type ZonaPreferida = (typeof ZonaPreferida)[keyof typeof ZonaPreferida]
+
 }
+
+export type Rol = $Enums.Rol
+
+export const Rol: typeof $Enums.Rol
+
+export type NivelCliente = $Enums.NivelCliente
+
+export const NivelCliente: typeof $Enums.NivelCliente
 
 export type EstadoReserva = $Enums.EstadoReserva
 
 export const EstadoReserva: typeof $Enums.EstadoReserva
+
+export type ZonaPreferida = $Enums.ZonaPreferida
+
+export const ZonaPreferida: typeof $Enums.ZonaPreferida
 
 /**
  * ##  Prisma Client ʲˢ
@@ -176,6 +225,16 @@ export class PrismaClient<
   get mesa(): Prisma.MesaDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.usuario`: Exposes CRUD operations for the **Usuario** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Usuarios
+    * const usuarios = await prisma.usuario.findMany()
+    * ```
+    */
+  get usuario(): Prisma.UsuarioDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.cliente`: Exposes CRUD operations for the **Cliente** model.
     * Example usage:
     * ```ts
@@ -194,6 +253,16 @@ export class PrismaClient<
     * ```
     */
   get reserva(): Prisma.ReservaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sesion`: Exposes CRUD operations for the **Sesion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Sesions
+    * const sesions = await prisma.sesion.findMany()
+    * ```
+    */
+  get sesion(): Prisma.SesionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -636,8 +705,10 @@ export namespace Prisma {
 
   export const ModelName: {
     Mesa: 'Mesa',
+    Usuario: 'Usuario',
     Cliente: 'Cliente',
-    Reserva: 'Reserva'
+    Reserva: 'Reserva',
+    Sesion: 'Sesion'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -656,7 +727,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "mesa" | "cliente" | "reserva"
+      modelProps: "mesa" | "usuario" | "cliente" | "reserva" | "sesion"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -731,6 +802,80 @@ export namespace Prisma {
           count: {
             args: Prisma.MesaCountArgs<ExtArgs>
             result: $Utils.Optional<MesaCountAggregateOutputType> | number
+          }
+        }
+      }
+      Usuario: {
+        payload: Prisma.$UsuarioPayload<ExtArgs>
+        fields: Prisma.UsuarioFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UsuarioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UsuarioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+          }
+          findFirst: {
+            args: Prisma.UsuarioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UsuarioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+          }
+          findMany: {
+            args: Prisma.UsuarioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
+          }
+          create: {
+            args: Prisma.UsuarioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+          }
+          createMany: {
+            args: Prisma.UsuarioCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UsuarioCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
+          }
+          delete: {
+            args: Prisma.UsuarioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+          }
+          update: {
+            args: Prisma.UsuarioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+          }
+          deleteMany: {
+            args: Prisma.UsuarioDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UsuarioUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UsuarioUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
+          }
+          upsert: {
+            args: Prisma.UsuarioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+          }
+          aggregate: {
+            args: Prisma.UsuarioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUsuario>
+          }
+          groupBy: {
+            args: Prisma.UsuarioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UsuarioGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UsuarioCountArgs<ExtArgs>
+            result: $Utils.Optional<UsuarioCountAggregateOutputType> | number
           }
         }
       }
@@ -882,6 +1027,80 @@ export namespace Prisma {
           }
         }
       }
+      Sesion: {
+        payload: Prisma.$SesionPayload<ExtArgs>
+        fields: Prisma.SesionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SesionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SesionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>
+          }
+          findFirst: {
+            args: Prisma.SesionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SesionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>
+          }
+          findMany: {
+            args: Prisma.SesionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>[]
+          }
+          create: {
+            args: Prisma.SesionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>
+          }
+          createMany: {
+            args: Prisma.SesionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SesionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>[]
+          }
+          delete: {
+            args: Prisma.SesionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>
+          }
+          update: {
+            args: Prisma.SesionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SesionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SesionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SesionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>[]
+          }
+          upsert: {
+            args: Prisma.SesionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SesionPayload>
+          }
+          aggregate: {
+            args: Prisma.SesionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSesion>
+          }
+          groupBy: {
+            args: Prisma.SesionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SesionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SesionCountArgs<ExtArgs>
+            result: $Utils.Optional<SesionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -979,8 +1198,10 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     mesa?: MesaOmit
+    usuario?: UsuarioOmit
     cliente?: ClienteOmit
     reserva?: ReservaOmit
+    sesion?: SesionOmit
   }
 
   /* Types for Logging */
@@ -1084,6 +1305,37 @@ export namespace Prisma {
    */
   export type MesaCountOutputTypeCountReservasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReservaWhereInput
+  }
+
+
+  /**
+   * Count Type UsuarioCountOutputType
+   */
+
+  export type UsuarioCountOutputType = {
+    sesiones: number
+  }
+
+  export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sesiones?: boolean | UsuarioCountOutputTypeCountSesionesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsuarioCountOutputType
+     */
+    select?: UsuarioCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountSesionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SesionWhereInput
   }
 
 
@@ -2220,6 +2472,1209 @@ export namespace Prisma {
 
 
   /**
+   * Model Usuario
+   */
+
+  export type AggregateUsuario = {
+    _count: UsuarioCountAggregateOutputType | null
+    _avg: UsuarioAvgAggregateOutputType | null
+    _sum: UsuarioSumAggregateOutputType | null
+    _min: UsuarioMinAggregateOutputType | null
+    _max: UsuarioMaxAggregateOutputType | null
+  }
+
+  export type UsuarioAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UsuarioSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UsuarioMinAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    email: string | null
+    password: string | null
+    telefono: string | null
+    rol: $Enums.Rol | null
+    fechaRegistro: Date | null
+    activo: boolean | null
+    tokenRecuperacion: string | null
+    emailVerificado: boolean | null
+    avatarUrl: string | null
+  }
+
+  export type UsuarioMaxAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    email: string | null
+    password: string | null
+    telefono: string | null
+    rol: $Enums.Rol | null
+    fechaRegistro: Date | null
+    activo: boolean | null
+    tokenRecuperacion: string | null
+    emailVerificado: boolean | null
+    avatarUrl: string | null
+  }
+
+  export type UsuarioCountAggregateOutputType = {
+    id: number
+    nombre: number
+    email: number
+    password: number
+    telefono: number
+    rol: number
+    fechaRegistro: number
+    activo: number
+    tokenRecuperacion: number
+    emailVerificado: number
+    avatarUrl: number
+    _all: number
+  }
+
+
+  export type UsuarioAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type UsuarioSumAggregateInputType = {
+    id?: true
+  }
+
+  export type UsuarioMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    email?: true
+    password?: true
+    telefono?: true
+    rol?: true
+    fechaRegistro?: true
+    activo?: true
+    tokenRecuperacion?: true
+    emailVerificado?: true
+    avatarUrl?: true
+  }
+
+  export type UsuarioMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    email?: true
+    password?: true
+    telefono?: true
+    rol?: true
+    fechaRegistro?: true
+    activo?: true
+    tokenRecuperacion?: true
+    emailVerificado?: true
+    avatarUrl?: true
+  }
+
+  export type UsuarioCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    email?: true
+    password?: true
+    telefono?: true
+    rol?: true
+    fechaRegistro?: true
+    activo?: true
+    tokenRecuperacion?: true
+    emailVerificado?: true
+    avatarUrl?: true
+    _all?: true
+  }
+
+  export type UsuarioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Usuario to aggregate.
+     */
+    where?: UsuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Usuarios to fetch.
+     */
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UsuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Usuarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Usuarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Usuarios
+    **/
+    _count?: true | UsuarioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UsuarioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UsuarioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UsuarioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UsuarioMaxAggregateInputType
+  }
+
+  export type GetUsuarioAggregateType<T extends UsuarioAggregateArgs> = {
+        [P in keyof T & keyof AggregateUsuario]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUsuario[P]>
+      : GetScalarType<T[P], AggregateUsuario[P]>
+  }
+
+
+
+
+  export type UsuarioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsuarioWhereInput
+    orderBy?: UsuarioOrderByWithAggregationInput | UsuarioOrderByWithAggregationInput[]
+    by: UsuarioScalarFieldEnum[] | UsuarioScalarFieldEnum
+    having?: UsuarioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UsuarioCountAggregateInputType | true
+    _avg?: UsuarioAvgAggregateInputType
+    _sum?: UsuarioSumAggregateInputType
+    _min?: UsuarioMinAggregateInputType
+    _max?: UsuarioMaxAggregateInputType
+  }
+
+  export type UsuarioGroupByOutputType = {
+    id: number
+    nombre: string
+    email: string
+    password: string
+    telefono: string
+    rol: $Enums.Rol
+    fechaRegistro: Date
+    activo: boolean
+    tokenRecuperacion: string | null
+    emailVerificado: boolean
+    avatarUrl: string | null
+    _count: UsuarioCountAggregateOutputType | null
+    _avg: UsuarioAvgAggregateOutputType | null
+    _sum: UsuarioSumAggregateOutputType | null
+    _min: UsuarioMinAggregateOutputType | null
+    _max: UsuarioMaxAggregateOutputType | null
+  }
+
+  type GetUsuarioGroupByPayload<T extends UsuarioGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UsuarioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UsuarioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UsuarioGroupByOutputType[P]>
+            : GetScalarType<T[P], UsuarioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UsuarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    email?: boolean
+    password?: boolean
+    telefono?: boolean
+    rol?: boolean
+    fechaRegistro?: boolean
+    activo?: boolean
+    tokenRecuperacion?: boolean
+    emailVerificado?: boolean
+    avatarUrl?: boolean
+    cliente?: boolean | Usuario$clienteArgs<ExtArgs>
+    sesiones?: boolean | Usuario$sesionesArgs<ExtArgs>
+    _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["usuario"]>
+
+  export type UsuarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    email?: boolean
+    password?: boolean
+    telefono?: boolean
+    rol?: boolean
+    fechaRegistro?: boolean
+    activo?: boolean
+    tokenRecuperacion?: boolean
+    emailVerificado?: boolean
+    avatarUrl?: boolean
+  }, ExtArgs["result"]["usuario"]>
+
+  export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    email?: boolean
+    password?: boolean
+    telefono?: boolean
+    rol?: boolean
+    fechaRegistro?: boolean
+    activo?: boolean
+    tokenRecuperacion?: boolean
+    emailVerificado?: boolean
+    avatarUrl?: boolean
+  }, ExtArgs["result"]["usuario"]>
+
+  export type UsuarioSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    email?: boolean
+    password?: boolean
+    telefono?: boolean
+    rol?: boolean
+    fechaRegistro?: boolean
+    activo?: boolean
+    tokenRecuperacion?: boolean
+    emailVerificado?: boolean
+    avatarUrl?: boolean
+  }
+
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "email" | "password" | "telefono" | "rol" | "fechaRegistro" | "activo" | "tokenRecuperacion" | "emailVerificado" | "avatarUrl", ExtArgs["result"]["usuario"]>
+  export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cliente?: boolean | Usuario$clienteArgs<ExtArgs>
+    sesiones?: boolean | Usuario$sesionesArgs<ExtArgs>
+    _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UsuarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Usuario"
+    objects: {
+      cliente: Prisma.$ClientePayload<ExtArgs> | null
+      sesiones: Prisma.$SesionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nombre: string
+      email: string
+      password: string
+      telefono: string
+      rol: $Enums.Rol
+      fechaRegistro: Date
+      activo: boolean
+      tokenRecuperacion: string | null
+      emailVerificado: boolean
+      avatarUrl: string | null
+    }, ExtArgs["result"]["usuario"]>
+    composites: {}
+  }
+
+  type UsuarioGetPayload<S extends boolean | null | undefined | UsuarioDefaultArgs> = $Result.GetResult<Prisma.$UsuarioPayload, S>
+
+  type UsuarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UsuarioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UsuarioCountAggregateInputType | true
+    }
+
+  export interface UsuarioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Usuario'], meta: { name: 'Usuario' } }
+    /**
+     * Find zero or one Usuario that matches the filter.
+     * @param {UsuarioFindUniqueArgs} args - Arguments to find a Usuario
+     * @example
+     * // Get one Usuario
+     * const usuario = await prisma.usuario.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UsuarioFindUniqueArgs>(args: SelectSubset<T, UsuarioFindUniqueArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Usuario that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UsuarioFindUniqueOrThrowArgs} args - Arguments to find a Usuario
+     * @example
+     * // Get one Usuario
+     * const usuario = await prisma.usuario.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UsuarioFindUniqueOrThrowArgs>(args: SelectSubset<T, UsuarioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Usuario that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuarioFindFirstArgs} args - Arguments to find a Usuario
+     * @example
+     * // Get one Usuario
+     * const usuario = await prisma.usuario.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UsuarioFindFirstArgs>(args?: SelectSubset<T, UsuarioFindFirstArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Usuario that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuarioFindFirstOrThrowArgs} args - Arguments to find a Usuario
+     * @example
+     * // Get one Usuario
+     * const usuario = await prisma.usuario.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UsuarioFindFirstOrThrowArgs>(args?: SelectSubset<T, UsuarioFindFirstOrThrowArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Usuarios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuarioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Usuarios
+     * const usuarios = await prisma.usuario.findMany()
+     * 
+     * // Get first 10 Usuarios
+     * const usuarios = await prisma.usuario.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const usuarioWithIdOnly = await prisma.usuario.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UsuarioFindManyArgs>(args?: SelectSubset<T, UsuarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Usuario.
+     * @param {UsuarioCreateArgs} args - Arguments to create a Usuario.
+     * @example
+     * // Create one Usuario
+     * const Usuario = await prisma.usuario.create({
+     *   data: {
+     *     // ... data to create a Usuario
+     *   }
+     * })
+     * 
+     */
+    create<T extends UsuarioCreateArgs>(args: SelectSubset<T, UsuarioCreateArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Usuarios.
+     * @param {UsuarioCreateManyArgs} args - Arguments to create many Usuarios.
+     * @example
+     * // Create many Usuarios
+     * const usuario = await prisma.usuario.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UsuarioCreateManyArgs>(args?: SelectSubset<T, UsuarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Usuarios and returns the data saved in the database.
+     * @param {UsuarioCreateManyAndReturnArgs} args - Arguments to create many Usuarios.
+     * @example
+     * // Create many Usuarios
+     * const usuario = await prisma.usuario.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Usuarios and only return the `id`
+     * const usuarioWithIdOnly = await prisma.usuario.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UsuarioCreateManyAndReturnArgs>(args?: SelectSubset<T, UsuarioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Usuario.
+     * @param {UsuarioDeleteArgs} args - Arguments to delete one Usuario.
+     * @example
+     * // Delete one Usuario
+     * const Usuario = await prisma.usuario.delete({
+     *   where: {
+     *     // ... filter to delete one Usuario
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UsuarioDeleteArgs>(args: SelectSubset<T, UsuarioDeleteArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Usuario.
+     * @param {UsuarioUpdateArgs} args - Arguments to update one Usuario.
+     * @example
+     * // Update one Usuario
+     * const usuario = await prisma.usuario.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UsuarioUpdateArgs>(args: SelectSubset<T, UsuarioUpdateArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Usuarios.
+     * @param {UsuarioDeleteManyArgs} args - Arguments to filter Usuarios to delete.
+     * @example
+     * // Delete a few Usuarios
+     * const { count } = await prisma.usuario.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UsuarioDeleteManyArgs>(args?: SelectSubset<T, UsuarioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuarioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Usuarios
+     * const usuario = await prisma.usuario.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UsuarioUpdateManyArgs>(args: SelectSubset<T, UsuarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Usuarios and returns the data updated in the database.
+     * @param {UsuarioUpdateManyAndReturnArgs} args - Arguments to update many Usuarios.
+     * @example
+     * // Update many Usuarios
+     * const usuario = await prisma.usuario.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Usuarios and only return the `id`
+     * const usuarioWithIdOnly = await prisma.usuario.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UsuarioUpdateManyAndReturnArgs>(args: SelectSubset<T, UsuarioUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Usuario.
+     * @param {UsuarioUpsertArgs} args - Arguments to update or create a Usuario.
+     * @example
+     * // Update or create a Usuario
+     * const usuario = await prisma.usuario.upsert({
+     *   create: {
+     *     // ... data to create a Usuario
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Usuario we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UsuarioUpsertArgs>(args: SelectSubset<T, UsuarioUpsertArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuarioCountArgs} args - Arguments to filter Usuarios to count.
+     * @example
+     * // Count the number of Usuarios
+     * const count = await prisma.usuario.count({
+     *   where: {
+     *     // ... the filter for the Usuarios we want to count
+     *   }
+     * })
+    **/
+    count<T extends UsuarioCountArgs>(
+      args?: Subset<T, UsuarioCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UsuarioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Usuario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UsuarioAggregateArgs>(args: Subset<T, UsuarioAggregateArgs>): Prisma.PrismaPromise<GetUsuarioAggregateType<T>>
+
+    /**
+     * Group by Usuario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsuarioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UsuarioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UsuarioGroupByArgs['orderBy'] }
+        : { orderBy?: UsuarioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UsuarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuarioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Usuario model
+   */
+  readonly fields: UsuarioFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Usuario.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cliente<T extends Usuario$clienteArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$clienteArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    sesiones<T extends Usuario$sesionesArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$sesionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Usuario model
+   */
+  interface UsuarioFieldRefs {
+    readonly id: FieldRef<"Usuario", 'Int'>
+    readonly nombre: FieldRef<"Usuario", 'String'>
+    readonly email: FieldRef<"Usuario", 'String'>
+    readonly password: FieldRef<"Usuario", 'String'>
+    readonly telefono: FieldRef<"Usuario", 'String'>
+    readonly rol: FieldRef<"Usuario", 'Rol'>
+    readonly fechaRegistro: FieldRef<"Usuario", 'DateTime'>
+    readonly activo: FieldRef<"Usuario", 'Boolean'>
+    readonly tokenRecuperacion: FieldRef<"Usuario", 'String'>
+    readonly emailVerificado: FieldRef<"Usuario", 'Boolean'>
+    readonly avatarUrl: FieldRef<"Usuario", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Usuario findUnique
+   */
+  export type UsuarioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Usuario to fetch.
+     */
+    where: UsuarioWhereUniqueInput
+  }
+
+  /**
+   * Usuario findUniqueOrThrow
+   */
+  export type UsuarioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Usuario to fetch.
+     */
+    where: UsuarioWhereUniqueInput
+  }
+
+  /**
+   * Usuario findFirst
+   */
+  export type UsuarioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Usuario to fetch.
+     */
+    where?: UsuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Usuarios to fetch.
+     */
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Usuarios.
+     */
+    cursor?: UsuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Usuarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Usuarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Usuarios.
+     */
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario findFirstOrThrow
+   */
+  export type UsuarioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Usuario to fetch.
+     */
+    where?: UsuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Usuarios to fetch.
+     */
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Usuarios.
+     */
+    cursor?: UsuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Usuarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Usuarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Usuarios.
+     */
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario findMany
+   */
+  export type UsuarioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Usuarios to fetch.
+     */
+    where?: UsuarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Usuarios to fetch.
+     */
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Usuarios.
+     */
+    cursor?: UsuarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Usuarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Usuarios.
+     */
+    skip?: number
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario create
+   */
+  export type UsuarioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Usuario.
+     */
+    data: XOR<UsuarioCreateInput, UsuarioUncheckedCreateInput>
+  }
+
+  /**
+   * Usuario createMany
+   */
+  export type UsuarioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Usuarios.
+     */
+    data: UsuarioCreateManyInput | UsuarioCreateManyInput[]
+  }
+
+  /**
+   * Usuario createManyAndReturn
+   */
+  export type UsuarioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * The data used to create many Usuarios.
+     */
+    data: UsuarioCreateManyInput | UsuarioCreateManyInput[]
+  }
+
+  /**
+   * Usuario update
+   */
+  export type UsuarioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Usuario.
+     */
+    data: XOR<UsuarioUpdateInput, UsuarioUncheckedUpdateInput>
+    /**
+     * Choose, which Usuario to update.
+     */
+    where: UsuarioWhereUniqueInput
+  }
+
+  /**
+   * Usuario updateMany
+   */
+  export type UsuarioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Usuarios.
+     */
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyInput>
+    /**
+     * Filter which Usuarios to update
+     */
+    where?: UsuarioWhereInput
+    /**
+     * Limit how many Usuarios to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Usuario updateManyAndReturn
+   */
+  export type UsuarioUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * The data used to update Usuarios.
+     */
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyInput>
+    /**
+     * Filter which Usuarios to update
+     */
+    where?: UsuarioWhereInput
+    /**
+     * Limit how many Usuarios to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Usuario upsert
+   */
+  export type UsuarioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Usuario to update in case it exists.
+     */
+    where: UsuarioWhereUniqueInput
+    /**
+     * In case the Usuario found by the `where` argument doesn't exist, create a new Usuario with this data.
+     */
+    create: XOR<UsuarioCreateInput, UsuarioUncheckedCreateInput>
+    /**
+     * In case the Usuario was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UsuarioUpdateInput, UsuarioUncheckedUpdateInput>
+  }
+
+  /**
+   * Usuario delete
+   */
+  export type UsuarioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    /**
+     * Filter which Usuario to delete.
+     */
+    where: UsuarioWhereUniqueInput
+  }
+
+  /**
+   * Usuario deleteMany
+   */
+  export type UsuarioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Usuarios to delete
+     */
+    where?: UsuarioWhereInput
+    /**
+     * Limit how many Usuarios to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Usuario.cliente
+   */
+  export type Usuario$clienteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cliente
+     */
+    select?: ClienteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cliente
+     */
+    omit?: ClienteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClienteInclude<ExtArgs> | null
+    where?: ClienteWhereInput
+  }
+
+  /**
+   * Usuario.sesiones
+   */
+  export type Usuario$sesionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    where?: SesionWhereInput
+    orderBy?: SesionOrderByWithRelationInput | SesionOrderByWithRelationInput[]
+    cursor?: SesionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SesionScalarFieldEnum | SesionScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario without action
+   */
+  export type UsuarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Cliente
    */
 
@@ -2233,14 +3688,28 @@ export namespace Prisma {
 
   export type ClienteAvgAggregateOutputType = {
     id: number | null
+    usuarioId: number | null
+    puntosFidelidad: number | null
+    totalReservas: number | null
+    reservasCanceladas: number | null
   }
 
   export type ClienteSumAggregateOutputType = {
     id: number | null
+    usuarioId: number | null
+    puntosFidelidad: number | null
+    totalReservas: number | null
+    reservasCanceladas: number | null
   }
 
   export type ClienteMinAggregateOutputType = {
     id: number | null
+    usuarioId: number | null
+    puntosFidelidad: number | null
+    nivelCliente: $Enums.NivelCliente | null
+    ultimaVisita: Date | null
+    totalReservas: number | null
+    reservasCanceladas: number | null
     nombre: string | null
     telefono: string | null
     email: string | null
@@ -2249,6 +3718,12 @@ export namespace Prisma {
 
   export type ClienteMaxAggregateOutputType = {
     id: number | null
+    usuarioId: number | null
+    puntosFidelidad: number | null
+    nivelCliente: $Enums.NivelCliente | null
+    ultimaVisita: Date | null
+    totalReservas: number | null
+    reservasCanceladas: number | null
     nombre: string | null
     telefono: string | null
     email: string | null
@@ -2257,6 +3732,13 @@ export namespace Prisma {
 
   export type ClienteCountAggregateOutputType = {
     id: number
+    usuarioId: number
+    puntosFidelidad: number
+    nivelCliente: number
+    preferencias: number
+    ultimaVisita: number
+    totalReservas: number
+    reservasCanceladas: number
     nombre: number
     telefono: number
     email: number
@@ -2267,14 +3749,28 @@ export namespace Prisma {
 
   export type ClienteAvgAggregateInputType = {
     id?: true
+    usuarioId?: true
+    puntosFidelidad?: true
+    totalReservas?: true
+    reservasCanceladas?: true
   }
 
   export type ClienteSumAggregateInputType = {
     id?: true
+    usuarioId?: true
+    puntosFidelidad?: true
+    totalReservas?: true
+    reservasCanceladas?: true
   }
 
   export type ClienteMinAggregateInputType = {
     id?: true
+    usuarioId?: true
+    puntosFidelidad?: true
+    nivelCliente?: true
+    ultimaVisita?: true
+    totalReservas?: true
+    reservasCanceladas?: true
     nombre?: true
     telefono?: true
     email?: true
@@ -2283,6 +3779,12 @@ export namespace Prisma {
 
   export type ClienteMaxAggregateInputType = {
     id?: true
+    usuarioId?: true
+    puntosFidelidad?: true
+    nivelCliente?: true
+    ultimaVisita?: true
+    totalReservas?: true
+    reservasCanceladas?: true
     nombre?: true
     telefono?: true
     email?: true
@@ -2291,6 +3793,13 @@ export namespace Prisma {
 
   export type ClienteCountAggregateInputType = {
     id?: true
+    usuarioId?: true
+    puntosFidelidad?: true
+    nivelCliente?: true
+    preferencias?: true
+    ultimaVisita?: true
+    totalReservas?: true
+    reservasCanceladas?: true
     nombre?: true
     telefono?: true
     email?: true
@@ -2386,8 +3895,15 @@ export namespace Prisma {
 
   export type ClienteGroupByOutputType = {
     id: number
-    nombre: string
-    telefono: string
+    usuarioId: number
+    puntosFidelidad: number
+    nivelCliente: $Enums.NivelCliente
+    preferencias: JsonValue | null
+    ultimaVisita: Date | null
+    totalReservas: number
+    reservasCanceladas: number
+    nombre: string | null
+    telefono: string | null
     email: string | null
     createdAt: Date
     _count: ClienteCountAggregateOutputType | null
@@ -2413,55 +3929,99 @@ export namespace Prisma {
 
   export type ClienteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    usuarioId?: boolean
+    puntosFidelidad?: boolean
+    nivelCliente?: boolean
+    preferencias?: boolean
+    ultimaVisita?: boolean
+    totalReservas?: boolean
+    reservasCanceladas?: boolean
     nombre?: boolean
     telefono?: boolean
     email?: boolean
     createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     reservas?: boolean | Cliente$reservasArgs<ExtArgs>
     _count?: boolean | ClienteCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cliente"]>
 
   export type ClienteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    usuarioId?: boolean
+    puntosFidelidad?: boolean
+    nivelCliente?: boolean
+    preferencias?: boolean
+    ultimaVisita?: boolean
+    totalReservas?: boolean
+    reservasCanceladas?: boolean
     nombre?: boolean
     telefono?: boolean
     email?: boolean
     createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cliente"]>
 
   export type ClienteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    usuarioId?: boolean
+    puntosFidelidad?: boolean
+    nivelCliente?: boolean
+    preferencias?: boolean
+    ultimaVisita?: boolean
+    totalReservas?: boolean
+    reservasCanceladas?: boolean
     nombre?: boolean
     telefono?: boolean
     email?: boolean
     createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cliente"]>
 
   export type ClienteSelectScalar = {
     id?: boolean
+    usuarioId?: boolean
+    puntosFidelidad?: boolean
+    nivelCliente?: boolean
+    preferencias?: boolean
+    ultimaVisita?: boolean
+    totalReservas?: boolean
+    reservasCanceladas?: boolean
     nombre?: boolean
     telefono?: boolean
     email?: boolean
     createdAt?: boolean
   }
 
-  export type ClienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "telefono" | "email" | "createdAt", ExtArgs["result"]["cliente"]>
+  export type ClienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "puntosFidelidad" | "nivelCliente" | "preferencias" | "ultimaVisita" | "totalReservas" | "reservasCanceladas" | "nombre" | "telefono" | "email" | "createdAt", ExtArgs["result"]["cliente"]>
   export type ClienteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     reservas?: boolean | Cliente$reservasArgs<ExtArgs>
     _count?: boolean | ClienteCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ClienteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ClienteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ClienteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ClienteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
 
   export type $ClientePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Cliente"
     objects: {
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
       reservas: Prisma.$ReservaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      nombre: string
-      telefono: string
+      usuarioId: number
+      puntosFidelidad: number
+      nivelCliente: $Enums.NivelCliente
+      preferencias: Prisma.JsonValue | null
+      ultimaVisita: Date | null
+      totalReservas: number
+      reservasCanceladas: number
+      nombre: string | null
+      telefono: string | null
       email: string | null
       createdAt: Date
     }, ExtArgs["result"]["cliente"]>
@@ -2858,6 +4418,7 @@ export namespace Prisma {
    */
   export interface Prisma__ClienteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     reservas<T extends Cliente$reservasArgs<ExtArgs> = {}>(args?: Subset<T, Cliente$reservasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReservaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2889,6 +4450,13 @@ export namespace Prisma {
    */
   interface ClienteFieldRefs {
     readonly id: FieldRef<"Cliente", 'Int'>
+    readonly usuarioId: FieldRef<"Cliente", 'Int'>
+    readonly puntosFidelidad: FieldRef<"Cliente", 'Int'>
+    readonly nivelCliente: FieldRef<"Cliente", 'NivelCliente'>
+    readonly preferencias: FieldRef<"Cliente", 'Json'>
+    readonly ultimaVisita: FieldRef<"Cliente", 'DateTime'>
+    readonly totalReservas: FieldRef<"Cliente", 'Int'>
+    readonly reservasCanceladas: FieldRef<"Cliente", 'Int'>
     readonly nombre: FieldRef<"Cliente", 'String'>
     readonly telefono: FieldRef<"Cliente", 'String'>
     readonly email: FieldRef<"Cliente", 'String'>
@@ -3140,6 +4708,10 @@ export namespace Prisma {
      * The data used to create many Clientes.
      */
     data: ClienteCreateManyInput | ClienteCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClienteIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3210,6 +4782,10 @@ export namespace Prisma {
      * Limit how many Clientes to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClienteIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3354,6 +4930,9 @@ export namespace Prisma {
     fechaHora: Date | null
     numeroPersonas: number | null
     estado: $Enums.EstadoReserva | null
+    comentarios: string | null
+    preferenciaZona: $Enums.ZonaPreferida | null
+    motivoCancelacion: string | null
     createdAt: Date | null
   }
 
@@ -3364,6 +4943,9 @@ export namespace Prisma {
     fechaHora: Date | null
     numeroPersonas: number | null
     estado: $Enums.EstadoReserva | null
+    comentarios: string | null
+    preferenciaZona: $Enums.ZonaPreferida | null
+    motivoCancelacion: string | null
     createdAt: Date | null
   }
 
@@ -3374,6 +4956,9 @@ export namespace Prisma {
     fechaHora: number
     numeroPersonas: number
     estado: number
+    comentarios: number
+    preferenciaZona: number
+    motivoCancelacion: number
     createdAt: number
     _all: number
   }
@@ -3400,6 +4985,9 @@ export namespace Prisma {
     fechaHora?: true
     numeroPersonas?: true
     estado?: true
+    comentarios?: true
+    preferenciaZona?: true
+    motivoCancelacion?: true
     createdAt?: true
   }
 
@@ -3410,6 +4998,9 @@ export namespace Prisma {
     fechaHora?: true
     numeroPersonas?: true
     estado?: true
+    comentarios?: true
+    preferenciaZona?: true
+    motivoCancelacion?: true
     createdAt?: true
   }
 
@@ -3420,6 +5011,9 @@ export namespace Prisma {
     fechaHora?: true
     numeroPersonas?: true
     estado?: true
+    comentarios?: true
+    preferenciaZona?: true
+    motivoCancelacion?: true
     createdAt?: true
     _all?: true
   }
@@ -3517,6 +5111,9 @@ export namespace Prisma {
     fechaHora: Date
     numeroPersonas: number
     estado: $Enums.EstadoReserva
+    comentarios: string | null
+    preferenciaZona: $Enums.ZonaPreferida
+    motivoCancelacion: string | null
     createdAt: Date
     _count: ReservaCountAggregateOutputType | null
     _avg: ReservaAvgAggregateOutputType | null
@@ -3546,6 +5143,9 @@ export namespace Prisma {
     fechaHora?: boolean
     numeroPersonas?: boolean
     estado?: boolean
+    comentarios?: boolean
+    preferenciaZona?: boolean
+    motivoCancelacion?: boolean
     createdAt?: boolean
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     mesa?: boolean | MesaDefaultArgs<ExtArgs>
@@ -3558,6 +5158,9 @@ export namespace Prisma {
     fechaHora?: boolean
     numeroPersonas?: boolean
     estado?: boolean
+    comentarios?: boolean
+    preferenciaZona?: boolean
+    motivoCancelacion?: boolean
     createdAt?: boolean
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     mesa?: boolean | MesaDefaultArgs<ExtArgs>
@@ -3570,6 +5173,9 @@ export namespace Prisma {
     fechaHora?: boolean
     numeroPersonas?: boolean
     estado?: boolean
+    comentarios?: boolean
+    preferenciaZona?: boolean
+    motivoCancelacion?: boolean
     createdAt?: boolean
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     mesa?: boolean | MesaDefaultArgs<ExtArgs>
@@ -3582,10 +5188,13 @@ export namespace Prisma {
     fechaHora?: boolean
     numeroPersonas?: boolean
     estado?: boolean
+    comentarios?: boolean
+    preferenciaZona?: boolean
+    motivoCancelacion?: boolean
     createdAt?: boolean
   }
 
-  export type ReservaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "mesaId" | "fechaHora" | "numeroPersonas" | "estado" | "createdAt", ExtArgs["result"]["reserva"]>
+  export type ReservaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "mesaId" | "fechaHora" | "numeroPersonas" | "estado" | "comentarios" | "preferenciaZona" | "motivoCancelacion" | "createdAt", ExtArgs["result"]["reserva"]>
   export type ReservaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     mesa?: boolean | MesaDefaultArgs<ExtArgs>
@@ -3612,6 +5221,9 @@ export namespace Prisma {
       fechaHora: Date
       numeroPersonas: number
       estado: $Enums.EstadoReserva
+      comentarios: string | null
+      preferenciaZona: $Enums.ZonaPreferida
+      motivoCancelacion: string | null
       createdAt: Date
     }, ExtArgs["result"]["reserva"]>
     composites: {}
@@ -4044,6 +5656,9 @@ export namespace Prisma {
     readonly fechaHora: FieldRef<"Reserva", 'DateTime'>
     readonly numeroPersonas: FieldRef<"Reserva", 'Int'>
     readonly estado: FieldRef<"Reserva", 'EstadoReserva'>
+    readonly comentarios: FieldRef<"Reserva", 'String'>
+    readonly preferenciaZona: FieldRef<"Reserva", 'ZonaPreferida'>
+    readonly motivoCancelacion: FieldRef<"Reserva", 'String'>
     readonly createdAt: FieldRef<"Reserva", 'DateTime'>
   }
     
@@ -4458,6 +6073,1126 @@ export namespace Prisma {
 
 
   /**
+   * Model Sesion
+   */
+
+  export type AggregateSesion = {
+    _count: SesionCountAggregateOutputType | null
+    _avg: SesionAvgAggregateOutputType | null
+    _sum: SesionSumAggregateOutputType | null
+    _min: SesionMinAggregateOutputType | null
+    _max: SesionMaxAggregateOutputType | null
+  }
+
+  export type SesionAvgAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+  }
+
+  export type SesionSumAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+  }
+
+  export type SesionMinAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    token: string | null
+    fechaCreacion: Date | null
+    fechaExpiracion: Date | null
+    ipAddress: string | null
+    userAgent: string | null
+  }
+
+  export type SesionMaxAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    token: string | null
+    fechaCreacion: Date | null
+    fechaExpiracion: Date | null
+    ipAddress: string | null
+    userAgent: string | null
+  }
+
+  export type SesionCountAggregateOutputType = {
+    id: number
+    usuarioId: number
+    token: number
+    fechaCreacion: number
+    fechaExpiracion: number
+    ipAddress: number
+    userAgent: number
+    _all: number
+  }
+
+
+  export type SesionAvgAggregateInputType = {
+    id?: true
+    usuarioId?: true
+  }
+
+  export type SesionSumAggregateInputType = {
+    id?: true
+    usuarioId?: true
+  }
+
+  export type SesionMinAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    token?: true
+    fechaCreacion?: true
+    fechaExpiracion?: true
+    ipAddress?: true
+    userAgent?: true
+  }
+
+  export type SesionMaxAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    token?: true
+    fechaCreacion?: true
+    fechaExpiracion?: true
+    ipAddress?: true
+    userAgent?: true
+  }
+
+  export type SesionCountAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    token?: true
+    fechaCreacion?: true
+    fechaExpiracion?: true
+    ipAddress?: true
+    userAgent?: true
+    _all?: true
+  }
+
+  export type SesionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sesion to aggregate.
+     */
+    where?: SesionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sesions to fetch.
+     */
+    orderBy?: SesionOrderByWithRelationInput | SesionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SesionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sesions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sesions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Sesions
+    **/
+    _count?: true | SesionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SesionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SesionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SesionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SesionMaxAggregateInputType
+  }
+
+  export type GetSesionAggregateType<T extends SesionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSesion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSesion[P]>
+      : GetScalarType<T[P], AggregateSesion[P]>
+  }
+
+
+
+
+  export type SesionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SesionWhereInput
+    orderBy?: SesionOrderByWithAggregationInput | SesionOrderByWithAggregationInput[]
+    by: SesionScalarFieldEnum[] | SesionScalarFieldEnum
+    having?: SesionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SesionCountAggregateInputType | true
+    _avg?: SesionAvgAggregateInputType
+    _sum?: SesionSumAggregateInputType
+    _min?: SesionMinAggregateInputType
+    _max?: SesionMaxAggregateInputType
+  }
+
+  export type SesionGroupByOutputType = {
+    id: number
+    usuarioId: number
+    token: string
+    fechaCreacion: Date
+    fechaExpiracion: Date
+    ipAddress: string | null
+    userAgent: string | null
+    _count: SesionCountAggregateOutputType | null
+    _avg: SesionAvgAggregateOutputType | null
+    _sum: SesionSumAggregateOutputType | null
+    _min: SesionMinAggregateOutputType | null
+    _max: SesionMaxAggregateOutputType | null
+  }
+
+  type GetSesionGroupByPayload<T extends SesionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SesionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SesionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SesionGroupByOutputType[P]>
+            : GetScalarType<T[P], SesionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SesionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    token?: boolean
+    fechaCreacion?: boolean
+    fechaExpiracion?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sesion"]>
+
+  export type SesionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    token?: boolean
+    fechaCreacion?: boolean
+    fechaExpiracion?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sesion"]>
+
+  export type SesionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    token?: boolean
+    fechaCreacion?: boolean
+    fechaExpiracion?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sesion"]>
+
+  export type SesionSelectScalar = {
+    id?: boolean
+    usuarioId?: boolean
+    token?: boolean
+    fechaCreacion?: boolean
+    fechaExpiracion?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+  }
+
+  export type SesionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "token" | "fechaCreacion" | "fechaExpiracion" | "ipAddress" | "userAgent", ExtArgs["result"]["sesion"]>
+  export type SesionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type SesionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type SesionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $SesionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Sesion"
+    objects: {
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      usuarioId: number
+      token: string
+      fechaCreacion: Date
+      fechaExpiracion: Date
+      ipAddress: string | null
+      userAgent: string | null
+    }, ExtArgs["result"]["sesion"]>
+    composites: {}
+  }
+
+  type SesionGetPayload<S extends boolean | null | undefined | SesionDefaultArgs> = $Result.GetResult<Prisma.$SesionPayload, S>
+
+  type SesionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SesionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SesionCountAggregateInputType | true
+    }
+
+  export interface SesionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Sesion'], meta: { name: 'Sesion' } }
+    /**
+     * Find zero or one Sesion that matches the filter.
+     * @param {SesionFindUniqueArgs} args - Arguments to find a Sesion
+     * @example
+     * // Get one Sesion
+     * const sesion = await prisma.sesion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SesionFindUniqueArgs>(args: SelectSubset<T, SesionFindUniqueArgs<ExtArgs>>): Prisma__SesionClient<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Sesion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SesionFindUniqueOrThrowArgs} args - Arguments to find a Sesion
+     * @example
+     * // Get one Sesion
+     * const sesion = await prisma.sesion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SesionFindUniqueOrThrowArgs>(args: SelectSubset<T, SesionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SesionClient<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sesion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SesionFindFirstArgs} args - Arguments to find a Sesion
+     * @example
+     * // Get one Sesion
+     * const sesion = await prisma.sesion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SesionFindFirstArgs>(args?: SelectSubset<T, SesionFindFirstArgs<ExtArgs>>): Prisma__SesionClient<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sesion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SesionFindFirstOrThrowArgs} args - Arguments to find a Sesion
+     * @example
+     * // Get one Sesion
+     * const sesion = await prisma.sesion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SesionFindFirstOrThrowArgs>(args?: SelectSubset<T, SesionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SesionClient<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Sesions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SesionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Sesions
+     * const sesions = await prisma.sesion.findMany()
+     * 
+     * // Get first 10 Sesions
+     * const sesions = await prisma.sesion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sesionWithIdOnly = await prisma.sesion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SesionFindManyArgs>(args?: SelectSubset<T, SesionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Sesion.
+     * @param {SesionCreateArgs} args - Arguments to create a Sesion.
+     * @example
+     * // Create one Sesion
+     * const Sesion = await prisma.sesion.create({
+     *   data: {
+     *     // ... data to create a Sesion
+     *   }
+     * })
+     * 
+     */
+    create<T extends SesionCreateArgs>(args: SelectSubset<T, SesionCreateArgs<ExtArgs>>): Prisma__SesionClient<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Sesions.
+     * @param {SesionCreateManyArgs} args - Arguments to create many Sesions.
+     * @example
+     * // Create many Sesions
+     * const sesion = await prisma.sesion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SesionCreateManyArgs>(args?: SelectSubset<T, SesionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Sesions and returns the data saved in the database.
+     * @param {SesionCreateManyAndReturnArgs} args - Arguments to create many Sesions.
+     * @example
+     * // Create many Sesions
+     * const sesion = await prisma.sesion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Sesions and only return the `id`
+     * const sesionWithIdOnly = await prisma.sesion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SesionCreateManyAndReturnArgs>(args?: SelectSubset<T, SesionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Sesion.
+     * @param {SesionDeleteArgs} args - Arguments to delete one Sesion.
+     * @example
+     * // Delete one Sesion
+     * const Sesion = await prisma.sesion.delete({
+     *   where: {
+     *     // ... filter to delete one Sesion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SesionDeleteArgs>(args: SelectSubset<T, SesionDeleteArgs<ExtArgs>>): Prisma__SesionClient<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Sesion.
+     * @param {SesionUpdateArgs} args - Arguments to update one Sesion.
+     * @example
+     * // Update one Sesion
+     * const sesion = await prisma.sesion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SesionUpdateArgs>(args: SelectSubset<T, SesionUpdateArgs<ExtArgs>>): Prisma__SesionClient<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Sesions.
+     * @param {SesionDeleteManyArgs} args - Arguments to filter Sesions to delete.
+     * @example
+     * // Delete a few Sesions
+     * const { count } = await prisma.sesion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SesionDeleteManyArgs>(args?: SelectSubset<T, SesionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sesions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SesionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Sesions
+     * const sesion = await prisma.sesion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SesionUpdateManyArgs>(args: SelectSubset<T, SesionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sesions and returns the data updated in the database.
+     * @param {SesionUpdateManyAndReturnArgs} args - Arguments to update many Sesions.
+     * @example
+     * // Update many Sesions
+     * const sesion = await prisma.sesion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Sesions and only return the `id`
+     * const sesionWithIdOnly = await prisma.sesion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SesionUpdateManyAndReturnArgs>(args: SelectSubset<T, SesionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Sesion.
+     * @param {SesionUpsertArgs} args - Arguments to update or create a Sesion.
+     * @example
+     * // Update or create a Sesion
+     * const sesion = await prisma.sesion.upsert({
+     *   create: {
+     *     // ... data to create a Sesion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Sesion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SesionUpsertArgs>(args: SelectSubset<T, SesionUpsertArgs<ExtArgs>>): Prisma__SesionClient<$Result.GetResult<Prisma.$SesionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Sesions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SesionCountArgs} args - Arguments to filter Sesions to count.
+     * @example
+     * // Count the number of Sesions
+     * const count = await prisma.sesion.count({
+     *   where: {
+     *     // ... the filter for the Sesions we want to count
+     *   }
+     * })
+    **/
+    count<T extends SesionCountArgs>(
+      args?: Subset<T, SesionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SesionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Sesion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SesionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SesionAggregateArgs>(args: Subset<T, SesionAggregateArgs>): Prisma.PrismaPromise<GetSesionAggregateType<T>>
+
+    /**
+     * Group by Sesion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SesionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SesionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SesionGroupByArgs['orderBy'] }
+        : { orderBy?: SesionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SesionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSesionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Sesion model
+   */
+  readonly fields: SesionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Sesion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SesionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Sesion model
+   */
+  interface SesionFieldRefs {
+    readonly id: FieldRef<"Sesion", 'Int'>
+    readonly usuarioId: FieldRef<"Sesion", 'Int'>
+    readonly token: FieldRef<"Sesion", 'String'>
+    readonly fechaCreacion: FieldRef<"Sesion", 'DateTime'>
+    readonly fechaExpiracion: FieldRef<"Sesion", 'DateTime'>
+    readonly ipAddress: FieldRef<"Sesion", 'String'>
+    readonly userAgent: FieldRef<"Sesion", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Sesion findUnique
+   */
+  export type SesionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * Filter, which Sesion to fetch.
+     */
+    where: SesionWhereUniqueInput
+  }
+
+  /**
+   * Sesion findUniqueOrThrow
+   */
+  export type SesionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * Filter, which Sesion to fetch.
+     */
+    where: SesionWhereUniqueInput
+  }
+
+  /**
+   * Sesion findFirst
+   */
+  export type SesionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * Filter, which Sesion to fetch.
+     */
+    where?: SesionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sesions to fetch.
+     */
+    orderBy?: SesionOrderByWithRelationInput | SesionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sesions.
+     */
+    cursor?: SesionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sesions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sesions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sesions.
+     */
+    distinct?: SesionScalarFieldEnum | SesionScalarFieldEnum[]
+  }
+
+  /**
+   * Sesion findFirstOrThrow
+   */
+  export type SesionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * Filter, which Sesion to fetch.
+     */
+    where?: SesionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sesions to fetch.
+     */
+    orderBy?: SesionOrderByWithRelationInput | SesionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sesions.
+     */
+    cursor?: SesionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sesions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sesions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sesions.
+     */
+    distinct?: SesionScalarFieldEnum | SesionScalarFieldEnum[]
+  }
+
+  /**
+   * Sesion findMany
+   */
+  export type SesionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * Filter, which Sesions to fetch.
+     */
+    where?: SesionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sesions to fetch.
+     */
+    orderBy?: SesionOrderByWithRelationInput | SesionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Sesions.
+     */
+    cursor?: SesionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sesions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sesions.
+     */
+    skip?: number
+    distinct?: SesionScalarFieldEnum | SesionScalarFieldEnum[]
+  }
+
+  /**
+   * Sesion create
+   */
+  export type SesionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Sesion.
+     */
+    data: XOR<SesionCreateInput, SesionUncheckedCreateInput>
+  }
+
+  /**
+   * Sesion createMany
+   */
+  export type SesionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Sesions.
+     */
+    data: SesionCreateManyInput | SesionCreateManyInput[]
+  }
+
+  /**
+   * Sesion createManyAndReturn
+   */
+  export type SesionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Sesions.
+     */
+    data: SesionCreateManyInput | SesionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Sesion update
+   */
+  export type SesionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Sesion.
+     */
+    data: XOR<SesionUpdateInput, SesionUncheckedUpdateInput>
+    /**
+     * Choose, which Sesion to update.
+     */
+    where: SesionWhereUniqueInput
+  }
+
+  /**
+   * Sesion updateMany
+   */
+  export type SesionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Sesions.
+     */
+    data: XOR<SesionUpdateManyMutationInput, SesionUncheckedUpdateManyInput>
+    /**
+     * Filter which Sesions to update
+     */
+    where?: SesionWhereInput
+    /**
+     * Limit how many Sesions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sesion updateManyAndReturn
+   */
+  export type SesionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * The data used to update Sesions.
+     */
+    data: XOR<SesionUpdateManyMutationInput, SesionUncheckedUpdateManyInput>
+    /**
+     * Filter which Sesions to update
+     */
+    where?: SesionWhereInput
+    /**
+     * Limit how many Sesions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Sesion upsert
+   */
+  export type SesionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Sesion to update in case it exists.
+     */
+    where: SesionWhereUniqueInput
+    /**
+     * In case the Sesion found by the `where` argument doesn't exist, create a new Sesion with this data.
+     */
+    create: XOR<SesionCreateInput, SesionUncheckedCreateInput>
+    /**
+     * In case the Sesion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SesionUpdateInput, SesionUncheckedUpdateInput>
+  }
+
+  /**
+   * Sesion delete
+   */
+  export type SesionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+    /**
+     * Filter which Sesion to delete.
+     */
+    where: SesionWhereUniqueInput
+  }
+
+  /**
+   * Sesion deleteMany
+   */
+  export type SesionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sesions to delete
+     */
+    where?: SesionWhereInput
+    /**
+     * Limit how many Sesions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sesion without action
+   */
+  export type SesionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sesion
+     */
+    select?: SesionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sesion
+     */
+    omit?: SesionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SesionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4478,8 +7213,32 @@ export namespace Prisma {
   export type MesaScalarFieldEnum = (typeof MesaScalarFieldEnum)[keyof typeof MesaScalarFieldEnum]
 
 
+  export const UsuarioScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    email: 'email',
+    password: 'password',
+    telefono: 'telefono',
+    rol: 'rol',
+    fechaRegistro: 'fechaRegistro',
+    activo: 'activo',
+    tokenRecuperacion: 'tokenRecuperacion',
+    emailVerificado: 'emailVerificado',
+    avatarUrl: 'avatarUrl'
+  };
+
+  export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
+
+
   export const ClienteScalarFieldEnum: {
     id: 'id',
+    usuarioId: 'usuarioId',
+    puntosFidelidad: 'puntosFidelidad',
+    nivelCliente: 'nivelCliente',
+    preferencias: 'preferencias',
+    ultimaVisita: 'ultimaVisita',
+    totalReservas: 'totalReservas',
+    reservasCanceladas: 'reservasCanceladas',
     nombre: 'nombre',
     telefono: 'telefono',
     email: 'email',
@@ -4496,10 +7255,26 @@ export namespace Prisma {
     fechaHora: 'fechaHora',
     numeroPersonas: 'numeroPersonas',
     estado: 'estado',
+    comentarios: 'comentarios',
+    preferenciaZona: 'preferenciaZona',
+    motivoCancelacion: 'motivoCancelacion',
     createdAt: 'createdAt'
   };
 
   export type ReservaScalarFieldEnum = (typeof ReservaScalarFieldEnum)[keyof typeof ReservaScalarFieldEnum]
+
+
+  export const SesionScalarFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    token: 'token',
+    fechaCreacion: 'fechaCreacion',
+    fechaExpiracion: 'fechaExpiracion',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent'
+  };
+
+  export type SesionScalarFieldEnum = (typeof SesionScalarFieldEnum)[keyof typeof SesionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4510,12 +7285,37 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const NullsOrder: {
     first: 'first',
     last: 'last'
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
   /**
@@ -4538,6 +7338,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Rol'
+   */
+  export type EnumRolFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Rol'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -4545,9 +7352,44 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'NivelCliente'
+   */
+  export type EnumNivelClienteFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NivelCliente'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'EstadoReserva'
    */
   export type EnumEstadoReservaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoReserva'>
+    
+
+
+  /**
+   * Reference to a field of type 'ZonaPreferida'
+   */
+  export type EnumZonaPreferidaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ZonaPreferida'>
     
 
 
@@ -4613,43 +7455,164 @@ export namespace Prisma {
     ubicacion?: StringWithAggregatesFilter<"Mesa"> | string
   }
 
+  export type UsuarioWhereInput = {
+    AND?: UsuarioWhereInput | UsuarioWhereInput[]
+    OR?: UsuarioWhereInput[]
+    NOT?: UsuarioWhereInput | UsuarioWhereInput[]
+    id?: IntFilter<"Usuario"> | number
+    nombre?: StringFilter<"Usuario"> | string
+    email?: StringFilter<"Usuario"> | string
+    password?: StringFilter<"Usuario"> | string
+    telefono?: StringFilter<"Usuario"> | string
+    rol?: EnumRolFilter<"Usuario"> | $Enums.Rol
+    fechaRegistro?: DateTimeFilter<"Usuario"> | Date | string
+    activo?: BoolFilter<"Usuario"> | boolean
+    tokenRecuperacion?: StringNullableFilter<"Usuario"> | string | null
+    emailVerificado?: BoolFilter<"Usuario"> | boolean
+    avatarUrl?: StringNullableFilter<"Usuario"> | string | null
+    cliente?: XOR<ClienteNullableScalarRelationFilter, ClienteWhereInput> | null
+    sesiones?: SesionListRelationFilter
+  }
+
+  export type UsuarioOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    telefono?: SortOrder
+    rol?: SortOrder
+    fechaRegistro?: SortOrder
+    activo?: SortOrder
+    tokenRecuperacion?: SortOrderInput | SortOrder
+    emailVerificado?: SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    cliente?: ClienteOrderByWithRelationInput
+    sesiones?: SesionOrderByRelationAggregateInput
+  }
+
+  export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    AND?: UsuarioWhereInput | UsuarioWhereInput[]
+    OR?: UsuarioWhereInput[]
+    NOT?: UsuarioWhereInput | UsuarioWhereInput[]
+    nombre?: StringFilter<"Usuario"> | string
+    password?: StringFilter<"Usuario"> | string
+    telefono?: StringFilter<"Usuario"> | string
+    rol?: EnumRolFilter<"Usuario"> | $Enums.Rol
+    fechaRegistro?: DateTimeFilter<"Usuario"> | Date | string
+    activo?: BoolFilter<"Usuario"> | boolean
+    tokenRecuperacion?: StringNullableFilter<"Usuario"> | string | null
+    emailVerificado?: BoolFilter<"Usuario"> | boolean
+    avatarUrl?: StringNullableFilter<"Usuario"> | string | null
+    cliente?: XOR<ClienteNullableScalarRelationFilter, ClienteWhereInput> | null
+    sesiones?: SesionListRelationFilter
+  }, "id" | "email">
+
+  export type UsuarioOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    telefono?: SortOrder
+    rol?: SortOrder
+    fechaRegistro?: SortOrder
+    activo?: SortOrder
+    tokenRecuperacion?: SortOrderInput | SortOrder
+    emailVerificado?: SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    _count?: UsuarioCountOrderByAggregateInput
+    _avg?: UsuarioAvgOrderByAggregateInput
+    _max?: UsuarioMaxOrderByAggregateInput
+    _min?: UsuarioMinOrderByAggregateInput
+    _sum?: UsuarioSumOrderByAggregateInput
+  }
+
+  export type UsuarioScalarWhereWithAggregatesInput = {
+    AND?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
+    OR?: UsuarioScalarWhereWithAggregatesInput[]
+    NOT?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Usuario"> | number
+    nombre?: StringWithAggregatesFilter<"Usuario"> | string
+    email?: StringWithAggregatesFilter<"Usuario"> | string
+    password?: StringWithAggregatesFilter<"Usuario"> | string
+    telefono?: StringWithAggregatesFilter<"Usuario"> | string
+    rol?: EnumRolWithAggregatesFilter<"Usuario"> | $Enums.Rol
+    fechaRegistro?: DateTimeWithAggregatesFilter<"Usuario"> | Date | string
+    activo?: BoolWithAggregatesFilter<"Usuario"> | boolean
+    tokenRecuperacion?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+    emailVerificado?: BoolWithAggregatesFilter<"Usuario"> | boolean
+    avatarUrl?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+  }
+
   export type ClienteWhereInput = {
     AND?: ClienteWhereInput | ClienteWhereInput[]
     OR?: ClienteWhereInput[]
     NOT?: ClienteWhereInput | ClienteWhereInput[]
     id?: IntFilter<"Cliente"> | number
-    nombre?: StringFilter<"Cliente"> | string
-    telefono?: StringFilter<"Cliente"> | string
+    usuarioId?: IntFilter<"Cliente"> | number
+    puntosFidelidad?: IntFilter<"Cliente"> | number
+    nivelCliente?: EnumNivelClienteFilter<"Cliente"> | $Enums.NivelCliente
+    preferencias?: JsonNullableFilter<"Cliente">
+    ultimaVisita?: DateTimeNullableFilter<"Cliente"> | Date | string | null
+    totalReservas?: IntFilter<"Cliente"> | number
+    reservasCanceladas?: IntFilter<"Cliente"> | number
+    nombre?: StringNullableFilter<"Cliente"> | string | null
+    telefono?: StringNullableFilter<"Cliente"> | string | null
     email?: StringNullableFilter<"Cliente"> | string | null
     createdAt?: DateTimeFilter<"Cliente"> | Date | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     reservas?: ReservaListRelationFilter
   }
 
   export type ClienteOrderByWithRelationInput = {
     id?: SortOrder
-    nombre?: SortOrder
-    telefono?: SortOrder
+    usuarioId?: SortOrder
+    puntosFidelidad?: SortOrder
+    nivelCliente?: SortOrder
+    preferencias?: SortOrderInput | SortOrder
+    ultimaVisita?: SortOrderInput | SortOrder
+    totalReservas?: SortOrder
+    reservasCanceladas?: SortOrder
+    nombre?: SortOrderInput | SortOrder
+    telefono?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    usuario?: UsuarioOrderByWithRelationInput
     reservas?: ReservaOrderByRelationAggregateInput
   }
 
   export type ClienteWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    email?: string
+    usuarioId?: number
     AND?: ClienteWhereInput | ClienteWhereInput[]
     OR?: ClienteWhereInput[]
     NOT?: ClienteWhereInput | ClienteWhereInput[]
-    nombre?: StringFilter<"Cliente"> | string
-    telefono?: StringFilter<"Cliente"> | string
+    puntosFidelidad?: IntFilter<"Cliente"> | number
+    nivelCliente?: EnumNivelClienteFilter<"Cliente"> | $Enums.NivelCliente
+    preferencias?: JsonNullableFilter<"Cliente">
+    ultimaVisita?: DateTimeNullableFilter<"Cliente"> | Date | string | null
+    totalReservas?: IntFilter<"Cliente"> | number
+    reservasCanceladas?: IntFilter<"Cliente"> | number
+    nombre?: StringNullableFilter<"Cliente"> | string | null
+    telefono?: StringNullableFilter<"Cliente"> | string | null
+    email?: StringNullableFilter<"Cliente"> | string | null
     createdAt?: DateTimeFilter<"Cliente"> | Date | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     reservas?: ReservaListRelationFilter
-  }, "id" | "email">
+  }, "id" | "usuarioId">
 
   export type ClienteOrderByWithAggregationInput = {
     id?: SortOrder
-    nombre?: SortOrder
-    telefono?: SortOrder
+    usuarioId?: SortOrder
+    puntosFidelidad?: SortOrder
+    nivelCliente?: SortOrder
+    preferencias?: SortOrderInput | SortOrder
+    ultimaVisita?: SortOrderInput | SortOrder
+    totalReservas?: SortOrder
+    reservasCanceladas?: SortOrder
+    nombre?: SortOrderInput | SortOrder
+    telefono?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ClienteCountOrderByAggregateInput
@@ -4664,8 +7627,15 @@ export namespace Prisma {
     OR?: ClienteScalarWhereWithAggregatesInput[]
     NOT?: ClienteScalarWhereWithAggregatesInput | ClienteScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Cliente"> | number
-    nombre?: StringWithAggregatesFilter<"Cliente"> | string
-    telefono?: StringWithAggregatesFilter<"Cliente"> | string
+    usuarioId?: IntWithAggregatesFilter<"Cliente"> | number
+    puntosFidelidad?: IntWithAggregatesFilter<"Cliente"> | number
+    nivelCliente?: EnumNivelClienteWithAggregatesFilter<"Cliente"> | $Enums.NivelCliente
+    preferencias?: JsonNullableWithAggregatesFilter<"Cliente">
+    ultimaVisita?: DateTimeNullableWithAggregatesFilter<"Cliente"> | Date | string | null
+    totalReservas?: IntWithAggregatesFilter<"Cliente"> | number
+    reservasCanceladas?: IntWithAggregatesFilter<"Cliente"> | number
+    nombre?: StringNullableWithAggregatesFilter<"Cliente"> | string | null
+    telefono?: StringNullableWithAggregatesFilter<"Cliente"> | string | null
     email?: StringNullableWithAggregatesFilter<"Cliente"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Cliente"> | Date | string
   }
@@ -4680,6 +7650,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFilter<"Reserva"> | Date | string
     numeroPersonas?: IntFilter<"Reserva"> | number
     estado?: EnumEstadoReservaFilter<"Reserva"> | $Enums.EstadoReserva
+    comentarios?: StringNullableFilter<"Reserva"> | string | null
+    preferenciaZona?: EnumZonaPreferidaFilter<"Reserva"> | $Enums.ZonaPreferida
+    motivoCancelacion?: StringNullableFilter<"Reserva"> | string | null
     createdAt?: DateTimeFilter<"Reserva"> | Date | string
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     mesa?: XOR<MesaScalarRelationFilter, MesaWhereInput>
@@ -4692,6 +7665,9 @@ export namespace Prisma {
     fechaHora?: SortOrder
     numeroPersonas?: SortOrder
     estado?: SortOrder
+    comentarios?: SortOrderInput | SortOrder
+    preferenciaZona?: SortOrder
+    motivoCancelacion?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     cliente?: ClienteOrderByWithRelationInput
     mesa?: MesaOrderByWithRelationInput
@@ -4708,6 +7684,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFilter<"Reserva"> | Date | string
     numeroPersonas?: IntFilter<"Reserva"> | number
     estado?: EnumEstadoReservaFilter<"Reserva"> | $Enums.EstadoReserva
+    comentarios?: StringNullableFilter<"Reserva"> | string | null
+    preferenciaZona?: EnumZonaPreferidaFilter<"Reserva"> | $Enums.ZonaPreferida
+    motivoCancelacion?: StringNullableFilter<"Reserva"> | string | null
     createdAt?: DateTimeFilter<"Reserva"> | Date | string
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     mesa?: XOR<MesaScalarRelationFilter, MesaWhereInput>
@@ -4720,6 +7699,9 @@ export namespace Prisma {
     fechaHora?: SortOrder
     numeroPersonas?: SortOrder
     estado?: SortOrder
+    comentarios?: SortOrderInput | SortOrder
+    preferenciaZona?: SortOrder
+    motivoCancelacion?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ReservaCountOrderByAggregateInput
     _avg?: ReservaAvgOrderByAggregateInput
@@ -4738,7 +7720,77 @@ export namespace Prisma {
     fechaHora?: DateTimeWithAggregatesFilter<"Reserva"> | Date | string
     numeroPersonas?: IntWithAggregatesFilter<"Reserva"> | number
     estado?: EnumEstadoReservaWithAggregatesFilter<"Reserva"> | $Enums.EstadoReserva
+    comentarios?: StringNullableWithAggregatesFilter<"Reserva"> | string | null
+    preferenciaZona?: EnumZonaPreferidaWithAggregatesFilter<"Reserva"> | $Enums.ZonaPreferida
+    motivoCancelacion?: StringNullableWithAggregatesFilter<"Reserva"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Reserva"> | Date | string
+  }
+
+  export type SesionWhereInput = {
+    AND?: SesionWhereInput | SesionWhereInput[]
+    OR?: SesionWhereInput[]
+    NOT?: SesionWhereInput | SesionWhereInput[]
+    id?: IntFilter<"Sesion"> | number
+    usuarioId?: IntFilter<"Sesion"> | number
+    token?: StringFilter<"Sesion"> | string
+    fechaCreacion?: DateTimeFilter<"Sesion"> | Date | string
+    fechaExpiracion?: DateTimeFilter<"Sesion"> | Date | string
+    ipAddress?: StringNullableFilter<"Sesion"> | string | null
+    userAgent?: StringNullableFilter<"Sesion"> | string | null
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type SesionOrderByWithRelationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    token?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaExpiracion?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    usuario?: UsuarioOrderByWithRelationInput
+  }
+
+  export type SesionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    token?: string
+    AND?: SesionWhereInput | SesionWhereInput[]
+    OR?: SesionWhereInput[]
+    NOT?: SesionWhereInput | SesionWhereInput[]
+    usuarioId?: IntFilter<"Sesion"> | number
+    fechaCreacion?: DateTimeFilter<"Sesion"> | Date | string
+    fechaExpiracion?: DateTimeFilter<"Sesion"> | Date | string
+    ipAddress?: StringNullableFilter<"Sesion"> | string | null
+    userAgent?: StringNullableFilter<"Sesion"> | string | null
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id" | "token">
+
+  export type SesionOrderByWithAggregationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    token?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaExpiracion?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    _count?: SesionCountOrderByAggregateInput
+    _avg?: SesionAvgOrderByAggregateInput
+    _max?: SesionMaxOrderByAggregateInput
+    _min?: SesionMinOrderByAggregateInput
+    _sum?: SesionSumOrderByAggregateInput
+  }
+
+  export type SesionScalarWhereWithAggregatesInput = {
+    AND?: SesionScalarWhereWithAggregatesInput | SesionScalarWhereWithAggregatesInput[]
+    OR?: SesionScalarWhereWithAggregatesInput[]
+    NOT?: SesionScalarWhereWithAggregatesInput | SesionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Sesion"> | number
+    usuarioId?: IntWithAggregatesFilter<"Sesion"> | number
+    token?: StringWithAggregatesFilter<"Sesion"> | string
+    fechaCreacion?: DateTimeWithAggregatesFilter<"Sesion"> | Date | string
+    fechaExpiracion?: DateTimeWithAggregatesFilter<"Sesion"> | Date | string
+    ipAddress?: StringNullableWithAggregatesFilter<"Sesion"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"Sesion"> | string | null
   }
 
   export type MesaCreateInput = {
@@ -4791,35 +7843,166 @@ export namespace Prisma {
     ubicacion?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ClienteCreateInput = {
+  export type UsuarioCreateInput = {
     nombre: string
+    email: string
+    password: string
     telefono: string
+    rol?: $Enums.Rol
+    fechaRegistro?: Date | string
+    activo?: boolean
+    tokenRecuperacion?: string | null
+    emailVerificado?: boolean
+    avatarUrl?: string | null
+    cliente?: ClienteCreateNestedOneWithoutUsuarioInput
+    sesiones?: SesionCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateInput = {
+    id?: number
+    nombre: string
+    email: string
+    password: string
+    telefono: string
+    rol?: $Enums.Rol
+    fechaRegistro?: Date | string
+    activo?: boolean
+    tokenRecuperacion?: string | null
+    emailVerificado?: boolean
+    avatarUrl?: string | null
+    cliente?: ClienteUncheckedCreateNestedOneWithoutUsuarioInput
+    sesiones?: SesionUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    tokenRecuperacion?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificado?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cliente?: ClienteUpdateOneWithoutUsuarioNestedInput
+    sesiones?: SesionUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    tokenRecuperacion?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificado?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cliente?: ClienteUncheckedUpdateOneWithoutUsuarioNestedInput
+    sesiones?: SesionUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioCreateManyInput = {
+    id?: number
+    nombre: string
+    email: string
+    password: string
+    telefono: string
+    rol?: $Enums.Rol
+    fechaRegistro?: Date | string
+    activo?: boolean
+    tokenRecuperacion?: string | null
+    emailVerificado?: boolean
+    avatarUrl?: string | null
+  }
+
+  export type UsuarioUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    tokenRecuperacion?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificado?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UsuarioUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    tokenRecuperacion?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificado?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ClienteCreateInput = {
+    puntosFidelidad?: number
+    nivelCliente?: $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: Date | string | null
+    totalReservas?: number
+    reservasCanceladas?: number
+    nombre?: string | null
+    telefono?: string | null
     email?: string | null
     createdAt?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutClienteInput
     reservas?: ReservaCreateNestedManyWithoutClienteInput
   }
 
   export type ClienteUncheckedCreateInput = {
     id?: number
-    nombre: string
-    telefono: string
+    usuarioId: number
+    puntosFidelidad?: number
+    nivelCliente?: $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: Date | string | null
+    totalReservas?: number
+    reservasCanceladas?: number
+    nombre?: string | null
+    telefono?: string | null
     email?: string | null
     createdAt?: Date | string
     reservas?: ReservaUncheckedCreateNestedManyWithoutClienteInput
   }
 
   export type ClienteUpdateInput = {
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
+    puntosFidelidad?: IntFieldUpdateOperationsInput | number
+    nivelCliente?: EnumNivelClienteFieldUpdateOperationsInput | $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalReservas?: IntFieldUpdateOperationsInput | number
+    reservasCanceladas?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutClienteNestedInput
     reservas?: ReservaUpdateManyWithoutClienteNestedInput
   }
 
   export type ClienteUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    puntosFidelidad?: IntFieldUpdateOperationsInput | number
+    nivelCliente?: EnumNivelClienteFieldUpdateOperationsInput | $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalReservas?: IntFieldUpdateOperationsInput | number
+    reservasCanceladas?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reservas?: ReservaUncheckedUpdateManyWithoutClienteNestedInput
@@ -4827,23 +8010,43 @@ export namespace Prisma {
 
   export type ClienteCreateManyInput = {
     id?: number
-    nombre: string
-    telefono: string
+    usuarioId: number
+    puntosFidelidad?: number
+    nivelCliente?: $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: Date | string | null
+    totalReservas?: number
+    reservasCanceladas?: number
+    nombre?: string | null
+    telefono?: string | null
     email?: string | null
     createdAt?: Date | string
   }
 
   export type ClienteUpdateManyMutationInput = {
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
+    puntosFidelidad?: IntFieldUpdateOperationsInput | number
+    nivelCliente?: EnumNivelClienteFieldUpdateOperationsInput | $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalReservas?: IntFieldUpdateOperationsInput | number
+    reservasCanceladas?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ClienteUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    puntosFidelidad?: IntFieldUpdateOperationsInput | number
+    nivelCliente?: EnumNivelClienteFieldUpdateOperationsInput | $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalReservas?: IntFieldUpdateOperationsInput | number
+    reservasCanceladas?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4852,6 +8055,9 @@ export namespace Prisma {
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutReservasInput
     mesa: MesaCreateNestedOneWithoutReservasInput
@@ -4864,6 +8070,9 @@ export namespace Prisma {
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
   }
 
@@ -4871,6 +8080,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutReservasNestedInput
     mesa?: MesaUpdateOneRequiredWithoutReservasNestedInput
@@ -4883,6 +8095,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4893,6 +8108,9 @@ export namespace Prisma {
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
   }
 
@@ -4900,6 +8118,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4910,7 +8131,76 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SesionCreateInput = {
+    token: string
+    fechaCreacion?: Date | string
+    fechaExpiracion: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    usuario: UsuarioCreateNestedOneWithoutSesionesInput
+  }
+
+  export type SesionUncheckedCreateInput = {
+    id?: number
+    usuarioId: number
+    token: string
+    fechaCreacion?: Date | string
+    fechaExpiracion: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type SesionUpdateInput = {
+    token?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaExpiracion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: UsuarioUpdateOneRequiredWithoutSesionesNestedInput
+  }
+
+  export type SesionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaExpiracion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SesionCreateManyInput = {
+    id?: number
+    usuarioId: number
+    token: string
+    fechaCreacion?: Date | string
+    fechaExpiracion: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type SesionUpdateManyMutationInput = {
+    token?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaExpiracion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SesionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaExpiracion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5014,6 +8304,29 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type EnumRolFilter<$PrismaModel = never> = {
+    equals?: $Enums.Rol | EnumRolFieldRefInput<$PrismaModel>
+    in?: $Enums.Rol[]
+    notIn?: $Enums.Rol[]
+    not?: NestedEnumRolFilter<$PrismaModel> | $Enums.Rol
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -5028,15 +8341,15 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  export type ClienteNullableScalarRelationFilter = {
+    is?: ClienteWhereInput | null
+    isNot?: ClienteWhereInput | null
+  }
+
+  export type SesionListRelationFilter = {
+    every?: SesionWhereInput
+    some?: SesionWhereInput
+    none?: SesionWhereInput
   }
 
   export type SortOrderInput = {
@@ -5044,36 +8357,90 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type ClienteCountOrderByAggregateInput = {
+  export type SesionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UsuarioCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
-    telefono?: SortOrder
     email?: SortOrder
-    createdAt?: SortOrder
+    password?: SortOrder
+    telefono?: SortOrder
+    rol?: SortOrder
+    fechaRegistro?: SortOrder
+    activo?: SortOrder
+    tokenRecuperacion?: SortOrder
+    emailVerificado?: SortOrder
+    avatarUrl?: SortOrder
   }
 
-  export type ClienteAvgOrderByAggregateInput = {
+  export type UsuarioAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type ClienteMaxOrderByAggregateInput = {
+  export type UsuarioMaxOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
-    telefono?: SortOrder
     email?: SortOrder
-    createdAt?: SortOrder
+    password?: SortOrder
+    telefono?: SortOrder
+    rol?: SortOrder
+    fechaRegistro?: SortOrder
+    activo?: SortOrder
+    tokenRecuperacion?: SortOrder
+    emailVerificado?: SortOrder
+    avatarUrl?: SortOrder
   }
 
-  export type ClienteMinOrderByAggregateInput = {
+  export type UsuarioMinOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
-    telefono?: SortOrder
     email?: SortOrder
-    createdAt?: SortOrder
+    password?: SortOrder
+    telefono?: SortOrder
+    rol?: SortOrder
+    fechaRegistro?: SortOrder
+    activo?: SortOrder
+    tokenRecuperacion?: SortOrder
+    emailVerificado?: SortOrder
+    avatarUrl?: SortOrder
   }
 
-  export type ClienteSumOrderByAggregateInput = {
+  export type UsuarioSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type EnumRolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Rol | EnumRolFieldRefInput<$PrismaModel>
+    in?: $Enums.Rol[]
+    notIn?: $Enums.Rol[]
+    not?: NestedEnumRolWithAggregatesFilter<$PrismaModel> | $Enums.Rol
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRolFilter<$PrismaModel>
+    _max?: NestedEnumRolFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5093,18 +8460,149 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+  export type EnumNivelClienteFilter<$PrismaModel = never> = {
+    equals?: $Enums.NivelCliente | EnumNivelClienteFieldRefInput<$PrismaModel>
+    in?: $Enums.NivelCliente[]
+    notIn?: $Enums.NivelCliente[]
+    not?: NestedEnumNivelClienteFilter<$PrismaModel> | $Enums.NivelCliente
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type UsuarioScalarRelationFilter = {
+    is?: UsuarioWhereInput
+    isNot?: UsuarioWhereInput
+  }
+
+  export type ClienteCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puntosFidelidad?: SortOrder
+    nivelCliente?: SortOrder
+    preferencias?: SortOrder
+    ultimaVisita?: SortOrder
+    totalReservas?: SortOrder
+    reservasCanceladas?: SortOrder
+    nombre?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ClienteAvgOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puntosFidelidad?: SortOrder
+    totalReservas?: SortOrder
+    reservasCanceladas?: SortOrder
+  }
+
+  export type ClienteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puntosFidelidad?: SortOrder
+    nivelCliente?: SortOrder
+    ultimaVisita?: SortOrder
+    totalReservas?: SortOrder
+    reservasCanceladas?: SortOrder
+    nombre?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ClienteMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puntosFidelidad?: SortOrder
+    nivelCliente?: SortOrder
+    ultimaVisita?: SortOrder
+    totalReservas?: SortOrder
+    reservasCanceladas?: SortOrder
+    nombre?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ClienteSumOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puntosFidelidad?: SortOrder
+    totalReservas?: SortOrder
+    reservasCanceladas?: SortOrder
+  }
+
+  export type EnumNivelClienteWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NivelCliente | EnumNivelClienteFieldRefInput<$PrismaModel>
+    in?: $Enums.NivelCliente[]
+    notIn?: $Enums.NivelCliente[]
+    not?: NestedEnumNivelClienteWithAggregatesFilter<$PrismaModel> | $Enums.NivelCliente
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+    _min?: NestedEnumNivelClienteFilter<$PrismaModel>
+    _max?: NestedEnumNivelClienteFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumEstadoReservaFilter<$PrismaModel = never> = {
@@ -5112,6 +8610,13 @@ export namespace Prisma {
     in?: $Enums.EstadoReserva[]
     notIn?: $Enums.EstadoReserva[]
     not?: NestedEnumEstadoReservaFilter<$PrismaModel> | $Enums.EstadoReserva
+  }
+
+  export type EnumZonaPreferidaFilter<$PrismaModel = never> = {
+    equals?: $Enums.ZonaPreferida | EnumZonaPreferidaFieldRefInput<$PrismaModel>
+    in?: $Enums.ZonaPreferida[]
+    notIn?: $Enums.ZonaPreferida[]
+    not?: NestedEnumZonaPreferidaFilter<$PrismaModel> | $Enums.ZonaPreferida
   }
 
   export type ClienteScalarRelationFilter = {
@@ -5136,6 +8641,9 @@ export namespace Prisma {
     fechaHora?: SortOrder
     numeroPersonas?: SortOrder
     estado?: SortOrder
+    comentarios?: SortOrder
+    preferenciaZona?: SortOrder
+    motivoCancelacion?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -5153,6 +8661,9 @@ export namespace Prisma {
     fechaHora?: SortOrder
     numeroPersonas?: SortOrder
     estado?: SortOrder
+    comentarios?: SortOrder
+    preferenciaZona?: SortOrder
+    motivoCancelacion?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -5163,6 +8674,9 @@ export namespace Prisma {
     fechaHora?: SortOrder
     numeroPersonas?: SortOrder
     estado?: SortOrder
+    comentarios?: SortOrder
+    preferenciaZona?: SortOrder
+    motivoCancelacion?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -5181,6 +8695,56 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumEstadoReservaFilter<$PrismaModel>
     _max?: NestedEnumEstadoReservaFilter<$PrismaModel>
+  }
+
+  export type EnumZonaPreferidaWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ZonaPreferida | EnumZonaPreferidaFieldRefInput<$PrismaModel>
+    in?: $Enums.ZonaPreferida[]
+    notIn?: $Enums.ZonaPreferida[]
+    not?: NestedEnumZonaPreferidaWithAggregatesFilter<$PrismaModel> | $Enums.ZonaPreferida
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumZonaPreferidaFilter<$PrismaModel>
+    _max?: NestedEnumZonaPreferidaFilter<$PrismaModel>
+  }
+
+  export type SesionCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    token?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaExpiracion?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+  }
+
+  export type SesionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+  }
+
+  export type SesionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    token?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaExpiracion?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+  }
+
+  export type SesionMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    token?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaExpiracion?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+  }
+
+  export type SesionSumOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
   }
 
   export type ReservaCreateNestedManyWithoutMesaInput = {
@@ -5237,6 +8801,102 @@ export namespace Prisma {
     deleteMany?: ReservaScalarWhereInput | ReservaScalarWhereInput[]
   }
 
+  export type ClienteCreateNestedOneWithoutUsuarioInput = {
+    create?: XOR<ClienteCreateWithoutUsuarioInput, ClienteUncheckedCreateWithoutUsuarioInput>
+    connectOrCreate?: ClienteCreateOrConnectWithoutUsuarioInput
+    connect?: ClienteWhereUniqueInput
+  }
+
+  export type SesionCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<SesionCreateWithoutUsuarioInput, SesionUncheckedCreateWithoutUsuarioInput> | SesionCreateWithoutUsuarioInput[] | SesionUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: SesionCreateOrConnectWithoutUsuarioInput | SesionCreateOrConnectWithoutUsuarioInput[]
+    createMany?: SesionCreateManyUsuarioInputEnvelope
+    connect?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+  }
+
+  export type ClienteUncheckedCreateNestedOneWithoutUsuarioInput = {
+    create?: XOR<ClienteCreateWithoutUsuarioInput, ClienteUncheckedCreateWithoutUsuarioInput>
+    connectOrCreate?: ClienteCreateOrConnectWithoutUsuarioInput
+    connect?: ClienteWhereUniqueInput
+  }
+
+  export type SesionUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<SesionCreateWithoutUsuarioInput, SesionUncheckedCreateWithoutUsuarioInput> | SesionCreateWithoutUsuarioInput[] | SesionUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: SesionCreateOrConnectWithoutUsuarioInput | SesionCreateOrConnectWithoutUsuarioInput[]
+    createMany?: SesionCreateManyUsuarioInputEnvelope
+    connect?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+  }
+
+  export type EnumRolFieldUpdateOperationsInput = {
+    set?: $Enums.Rol
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type ClienteUpdateOneWithoutUsuarioNestedInput = {
+    create?: XOR<ClienteCreateWithoutUsuarioInput, ClienteUncheckedCreateWithoutUsuarioInput>
+    connectOrCreate?: ClienteCreateOrConnectWithoutUsuarioInput
+    upsert?: ClienteUpsertWithoutUsuarioInput
+    disconnect?: ClienteWhereInput | boolean
+    delete?: ClienteWhereInput | boolean
+    connect?: ClienteWhereUniqueInput
+    update?: XOR<XOR<ClienteUpdateToOneWithWhereWithoutUsuarioInput, ClienteUpdateWithoutUsuarioInput>, ClienteUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type SesionUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<SesionCreateWithoutUsuarioInput, SesionUncheckedCreateWithoutUsuarioInput> | SesionCreateWithoutUsuarioInput[] | SesionUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: SesionCreateOrConnectWithoutUsuarioInput | SesionCreateOrConnectWithoutUsuarioInput[]
+    upsert?: SesionUpsertWithWhereUniqueWithoutUsuarioInput | SesionUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: SesionCreateManyUsuarioInputEnvelope
+    set?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+    disconnect?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+    delete?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+    connect?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+    update?: SesionUpdateWithWhereUniqueWithoutUsuarioInput | SesionUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: SesionUpdateManyWithWhereWithoutUsuarioInput | SesionUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: SesionScalarWhereInput | SesionScalarWhereInput[]
+  }
+
+  export type ClienteUncheckedUpdateOneWithoutUsuarioNestedInput = {
+    create?: XOR<ClienteCreateWithoutUsuarioInput, ClienteUncheckedCreateWithoutUsuarioInput>
+    connectOrCreate?: ClienteCreateOrConnectWithoutUsuarioInput
+    upsert?: ClienteUpsertWithoutUsuarioInput
+    disconnect?: ClienteWhereInput | boolean
+    delete?: ClienteWhereInput | boolean
+    connect?: ClienteWhereUniqueInput
+    update?: XOR<XOR<ClienteUpdateToOneWithWhereWithoutUsuarioInput, ClienteUpdateWithoutUsuarioInput>, ClienteUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type SesionUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<SesionCreateWithoutUsuarioInput, SesionUncheckedCreateWithoutUsuarioInput> | SesionCreateWithoutUsuarioInput[] | SesionUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: SesionCreateOrConnectWithoutUsuarioInput | SesionCreateOrConnectWithoutUsuarioInput[]
+    upsert?: SesionUpsertWithWhereUniqueWithoutUsuarioInput | SesionUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: SesionCreateManyUsuarioInputEnvelope
+    set?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+    disconnect?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+    delete?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+    connect?: SesionWhereUniqueInput | SesionWhereUniqueInput[]
+    update?: SesionUpdateWithWhereUniqueWithoutUsuarioInput | SesionUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: SesionUpdateManyWithWhereWithoutUsuarioInput | SesionUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: SesionScalarWhereInput | SesionScalarWhereInput[]
+  }
+
+  export type UsuarioCreateNestedOneWithoutClienteInput = {
+    create?: XOR<UsuarioCreateWithoutClienteInput, UsuarioUncheckedCreateWithoutClienteInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutClienteInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
   export type ReservaCreateNestedManyWithoutClienteInput = {
     create?: XOR<ReservaCreateWithoutClienteInput, ReservaUncheckedCreateWithoutClienteInput> | ReservaCreateWithoutClienteInput[] | ReservaUncheckedCreateWithoutClienteInput[]
     connectOrCreate?: ReservaCreateOrConnectWithoutClienteInput | ReservaCreateOrConnectWithoutClienteInput[]
@@ -5251,12 +8911,20 @@ export namespace Prisma {
     connect?: ReservaWhereUniqueInput | ReservaWhereUniqueInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type EnumNivelClienteFieldUpdateOperationsInput = {
+    set?: $Enums.NivelCliente
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutClienteNestedInput = {
+    create?: XOR<UsuarioCreateWithoutClienteInput, UsuarioUncheckedCreateWithoutClienteInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutClienteInput
+    upsert?: UsuarioUpsertWithoutClienteInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutClienteInput, UsuarioUpdateWithoutClienteInput>, UsuarioUncheckedUpdateWithoutClienteInput>
   }
 
   export type ReservaUpdateManyWithoutClienteNestedInput = {
@@ -5303,6 +8971,10 @@ export namespace Prisma {
     set?: $Enums.EstadoReserva
   }
 
+  export type EnumZonaPreferidaFieldUpdateOperationsInput = {
+    set?: $Enums.ZonaPreferida
+  }
+
   export type ClienteUpdateOneRequiredWithoutReservasNestedInput = {
     create?: XOR<ClienteCreateWithoutReservasInput, ClienteUncheckedCreateWithoutReservasInput>
     connectOrCreate?: ClienteCreateOrConnectWithoutReservasInput
@@ -5317,6 +8989,20 @@ export namespace Prisma {
     upsert?: MesaUpsertWithoutReservasInput
     connect?: MesaWhereUniqueInput
     update?: XOR<XOR<MesaUpdateToOneWithWhereWithoutReservasInput, MesaUpdateWithoutReservasInput>, MesaUncheckedUpdateWithoutReservasInput>
+  }
+
+  export type UsuarioCreateNestedOneWithoutSesionesInput = {
+    create?: XOR<UsuarioCreateWithoutSesionesInput, UsuarioUncheckedCreateWithoutSesionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutSesionesInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutSesionesNestedInput = {
+    create?: XOR<UsuarioCreateWithoutSesionesInput, UsuarioUncheckedCreateWithoutSesionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutSesionesInput
+    upsert?: UsuarioUpsertWithoutSesionesInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutSesionesInput, UsuarioUpdateWithoutSesionesInput>, UsuarioUncheckedUpdateWithoutSesionesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5388,6 +9074,29 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedEnumRolFilter<$PrismaModel = never> = {
+    equals?: $Enums.Rol | EnumRolFieldRefInput<$PrismaModel>
+    in?: $Enums.Rol[]
+    notIn?: $Enums.Rol[]
+    not?: NestedEnumRolFilter<$PrismaModel> | $Enums.Rol
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -5402,7 +9111,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
+  export type NestedEnumRolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Rol | EnumRolFieldRefInput<$PrismaModel>
+    in?: $Enums.Rol[]
+    notIn?: $Enums.Rol[]
+    not?: NestedEnumRolWithAggregatesFilter<$PrismaModel> | $Enums.Rol
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRolFilter<$PrismaModel>
+    _max?: NestedEnumRolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
     notIn?: Date[] | string[]
@@ -5410,7 +9129,18 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5441,18 +9171,64 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+  export type NestedEnumNivelClienteFilter<$PrismaModel = never> = {
+    equals?: $Enums.NivelCliente | EnumNivelClienteFieldRefInput<$PrismaModel>
+    in?: $Enums.NivelCliente[]
+    notIn?: $Enums.NivelCliente[]
+    not?: NestedEnumNivelClienteFilter<$PrismaModel> | $Enums.NivelCliente
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedEnumNivelClienteWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NivelCliente | EnumNivelClienteFieldRefInput<$PrismaModel>
+    in?: $Enums.NivelCliente[]
+    notIn?: $Enums.NivelCliente[]
+    not?: NestedEnumNivelClienteWithAggregatesFilter<$PrismaModel> | $Enums.NivelCliente
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+    _min?: NestedEnumNivelClienteFilter<$PrismaModel>
+    _max?: NestedEnumNivelClienteFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumEstadoReservaFilter<$PrismaModel = never> = {
@@ -5460,6 +9236,13 @@ export namespace Prisma {
     in?: $Enums.EstadoReserva[]
     notIn?: $Enums.EstadoReserva[]
     not?: NestedEnumEstadoReservaFilter<$PrismaModel> | $Enums.EstadoReserva
+  }
+
+  export type NestedEnumZonaPreferidaFilter<$PrismaModel = never> = {
+    equals?: $Enums.ZonaPreferida | EnumZonaPreferidaFieldRefInput<$PrismaModel>
+    in?: $Enums.ZonaPreferida[]
+    notIn?: $Enums.ZonaPreferida[]
+    not?: NestedEnumZonaPreferidaFilter<$PrismaModel> | $Enums.ZonaPreferida
   }
 
   export type NestedEnumEstadoReservaWithAggregatesFilter<$PrismaModel = never> = {
@@ -5472,10 +9255,23 @@ export namespace Prisma {
     _max?: NestedEnumEstadoReservaFilter<$PrismaModel>
   }
 
+  export type NestedEnumZonaPreferidaWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ZonaPreferida | EnumZonaPreferidaFieldRefInput<$PrismaModel>
+    in?: $Enums.ZonaPreferida[]
+    notIn?: $Enums.ZonaPreferida[]
+    not?: NestedEnumZonaPreferidaWithAggregatesFilter<$PrismaModel> | $Enums.ZonaPreferida
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumZonaPreferidaFilter<$PrismaModel>
+    _max?: NestedEnumZonaPreferidaFilter<$PrismaModel>
+  }
+
   export type ReservaCreateWithoutMesaInput = {
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutReservasInput
   }
@@ -5486,6 +9282,9 @@ export namespace Prisma {
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
   }
 
@@ -5524,13 +9323,182 @@ export namespace Prisma {
     fechaHora?: DateTimeFilter<"Reserva"> | Date | string
     numeroPersonas?: IntFilter<"Reserva"> | number
     estado?: EnumEstadoReservaFilter<"Reserva"> | $Enums.EstadoReserva
+    comentarios?: StringNullableFilter<"Reserva"> | string | null
+    preferenciaZona?: EnumZonaPreferidaFilter<"Reserva"> | $Enums.ZonaPreferida
+    motivoCancelacion?: StringNullableFilter<"Reserva"> | string | null
     createdAt?: DateTimeFilter<"Reserva"> | Date | string
+  }
+
+  export type ClienteCreateWithoutUsuarioInput = {
+    puntosFidelidad?: number
+    nivelCliente?: $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: Date | string | null
+    totalReservas?: number
+    reservasCanceladas?: number
+    nombre?: string | null
+    telefono?: string | null
+    email?: string | null
+    createdAt?: Date | string
+    reservas?: ReservaCreateNestedManyWithoutClienteInput
+  }
+
+  export type ClienteUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    puntosFidelidad?: number
+    nivelCliente?: $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: Date | string | null
+    totalReservas?: number
+    reservasCanceladas?: number
+    nombre?: string | null
+    telefono?: string | null
+    email?: string | null
+    createdAt?: Date | string
+    reservas?: ReservaUncheckedCreateNestedManyWithoutClienteInput
+  }
+
+  export type ClienteCreateOrConnectWithoutUsuarioInput = {
+    where: ClienteWhereUniqueInput
+    create: XOR<ClienteCreateWithoutUsuarioInput, ClienteUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type SesionCreateWithoutUsuarioInput = {
+    token: string
+    fechaCreacion?: Date | string
+    fechaExpiracion: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type SesionUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    token: string
+    fechaCreacion?: Date | string
+    fechaExpiracion: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type SesionCreateOrConnectWithoutUsuarioInput = {
+    where: SesionWhereUniqueInput
+    create: XOR<SesionCreateWithoutUsuarioInput, SesionUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type SesionCreateManyUsuarioInputEnvelope = {
+    data: SesionCreateManyUsuarioInput | SesionCreateManyUsuarioInput[]
+  }
+
+  export type ClienteUpsertWithoutUsuarioInput = {
+    update: XOR<ClienteUpdateWithoutUsuarioInput, ClienteUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<ClienteCreateWithoutUsuarioInput, ClienteUncheckedCreateWithoutUsuarioInput>
+    where?: ClienteWhereInput
+  }
+
+  export type ClienteUpdateToOneWithWhereWithoutUsuarioInput = {
+    where?: ClienteWhereInput
+    data: XOR<ClienteUpdateWithoutUsuarioInput, ClienteUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type ClienteUpdateWithoutUsuarioInput = {
+    puntosFidelidad?: IntFieldUpdateOperationsInput | number
+    nivelCliente?: EnumNivelClienteFieldUpdateOperationsInput | $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalReservas?: IntFieldUpdateOperationsInput | number
+    reservasCanceladas?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reservas?: ReservaUpdateManyWithoutClienteNestedInput
+  }
+
+  export type ClienteUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    puntosFidelidad?: IntFieldUpdateOperationsInput | number
+    nivelCliente?: EnumNivelClienteFieldUpdateOperationsInput | $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalReservas?: IntFieldUpdateOperationsInput | number
+    reservasCanceladas?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reservas?: ReservaUncheckedUpdateManyWithoutClienteNestedInput
+  }
+
+  export type SesionUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: SesionWhereUniqueInput
+    update: XOR<SesionUpdateWithoutUsuarioInput, SesionUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<SesionCreateWithoutUsuarioInput, SesionUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type SesionUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: SesionWhereUniqueInput
+    data: XOR<SesionUpdateWithoutUsuarioInput, SesionUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type SesionUpdateManyWithWhereWithoutUsuarioInput = {
+    where: SesionScalarWhereInput
+    data: XOR<SesionUpdateManyMutationInput, SesionUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type SesionScalarWhereInput = {
+    AND?: SesionScalarWhereInput | SesionScalarWhereInput[]
+    OR?: SesionScalarWhereInput[]
+    NOT?: SesionScalarWhereInput | SesionScalarWhereInput[]
+    id?: IntFilter<"Sesion"> | number
+    usuarioId?: IntFilter<"Sesion"> | number
+    token?: StringFilter<"Sesion"> | string
+    fechaCreacion?: DateTimeFilter<"Sesion"> | Date | string
+    fechaExpiracion?: DateTimeFilter<"Sesion"> | Date | string
+    ipAddress?: StringNullableFilter<"Sesion"> | string | null
+    userAgent?: StringNullableFilter<"Sesion"> | string | null
+  }
+
+  export type UsuarioCreateWithoutClienteInput = {
+    nombre: string
+    email: string
+    password: string
+    telefono: string
+    rol?: $Enums.Rol
+    fechaRegistro?: Date | string
+    activo?: boolean
+    tokenRecuperacion?: string | null
+    emailVerificado?: boolean
+    avatarUrl?: string | null
+    sesiones?: SesionCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutClienteInput = {
+    id?: number
+    nombre: string
+    email: string
+    password: string
+    telefono: string
+    rol?: $Enums.Rol
+    fechaRegistro?: Date | string
+    activo?: boolean
+    tokenRecuperacion?: string | null
+    emailVerificado?: boolean
+    avatarUrl?: string | null
+    sesiones?: SesionUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutClienteInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutClienteInput, UsuarioUncheckedCreateWithoutClienteInput>
   }
 
   export type ReservaCreateWithoutClienteInput = {
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
     mesa: MesaCreateNestedOneWithoutReservasInput
   }
@@ -5541,6 +9509,9 @@ export namespace Prisma {
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
   }
 
@@ -5551,6 +9522,46 @@ export namespace Prisma {
 
   export type ReservaCreateManyClienteInputEnvelope = {
     data: ReservaCreateManyClienteInput | ReservaCreateManyClienteInput[]
+  }
+
+  export type UsuarioUpsertWithoutClienteInput = {
+    update: XOR<UsuarioUpdateWithoutClienteInput, UsuarioUncheckedUpdateWithoutClienteInput>
+    create: XOR<UsuarioCreateWithoutClienteInput, UsuarioUncheckedCreateWithoutClienteInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutClienteInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutClienteInput, UsuarioUncheckedUpdateWithoutClienteInput>
+  }
+
+  export type UsuarioUpdateWithoutClienteInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    tokenRecuperacion?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificado?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sesiones?: SesionUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutClienteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    tokenRecuperacion?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificado?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sesiones?: SesionUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ReservaUpsertWithWhereUniqueWithoutClienteInput = {
@@ -5570,16 +9581,30 @@ export namespace Prisma {
   }
 
   export type ClienteCreateWithoutReservasInput = {
-    nombre: string
-    telefono: string
+    puntosFidelidad?: number
+    nivelCliente?: $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: Date | string | null
+    totalReservas?: number
+    reservasCanceladas?: number
+    nombre?: string | null
+    telefono?: string | null
     email?: string | null
     createdAt?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutClienteInput
   }
 
   export type ClienteUncheckedCreateWithoutReservasInput = {
     id?: number
-    nombre: string
-    telefono: string
+    usuarioId: number
+    puntosFidelidad?: number
+    nivelCliente?: $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: Date | string | null
+    totalReservas?: number
+    reservasCanceladas?: number
+    nombre?: string | null
+    telefono?: string | null
     email?: string | null
     createdAt?: Date | string
   }
@@ -5619,16 +9644,30 @@ export namespace Prisma {
   }
 
   export type ClienteUpdateWithoutReservasInput = {
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
+    puntosFidelidad?: IntFieldUpdateOperationsInput | number
+    nivelCliente?: EnumNivelClienteFieldUpdateOperationsInput | $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalReservas?: IntFieldUpdateOperationsInput | number
+    reservasCanceladas?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutClienteNestedInput
   }
 
   export type ClienteUncheckedUpdateWithoutReservasInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    puntosFidelidad?: IntFieldUpdateOperationsInput | number
+    nivelCliente?: EnumNivelClienteFieldUpdateOperationsInput | $Enums.NivelCliente
+    preferencias?: NullableJsonNullValueInput | InputJsonValue
+    ultimaVisita?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalReservas?: IntFieldUpdateOperationsInput | number
+    reservasCanceladas?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5657,12 +9696,89 @@ export namespace Prisma {
     ubicacion?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UsuarioCreateWithoutSesionesInput = {
+    nombre: string
+    email: string
+    password: string
+    telefono: string
+    rol?: $Enums.Rol
+    fechaRegistro?: Date | string
+    activo?: boolean
+    tokenRecuperacion?: string | null
+    emailVerificado?: boolean
+    avatarUrl?: string | null
+    cliente?: ClienteCreateNestedOneWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutSesionesInput = {
+    id?: number
+    nombre: string
+    email: string
+    password: string
+    telefono: string
+    rol?: $Enums.Rol
+    fechaRegistro?: Date | string
+    activo?: boolean
+    tokenRecuperacion?: string | null
+    emailVerificado?: boolean
+    avatarUrl?: string | null
+    cliente?: ClienteUncheckedCreateNestedOneWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutSesionesInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutSesionesInput, UsuarioUncheckedCreateWithoutSesionesInput>
+  }
+
+  export type UsuarioUpsertWithoutSesionesInput = {
+    update: XOR<UsuarioUpdateWithoutSesionesInput, UsuarioUncheckedUpdateWithoutSesionesInput>
+    create: XOR<UsuarioCreateWithoutSesionesInput, UsuarioUncheckedCreateWithoutSesionesInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutSesionesInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutSesionesInput, UsuarioUncheckedUpdateWithoutSesionesInput>
+  }
+
+  export type UsuarioUpdateWithoutSesionesInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    tokenRecuperacion?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificado?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cliente?: ClienteUpdateOneWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutSesionesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    rol?: EnumRolFieldUpdateOperationsInput | $Enums.Rol
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    tokenRecuperacion?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificado?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cliente?: ClienteUncheckedUpdateOneWithoutUsuarioNestedInput
+  }
+
   export type ReservaCreateManyMesaInput = {
     id?: number
     clienteId: number
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
   }
 
@@ -5670,6 +9786,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutReservasNestedInput
   }
@@ -5680,6 +9799,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5689,7 +9811,45 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SesionCreateManyUsuarioInput = {
+    id?: number
+    token: string
+    fechaCreacion?: Date | string
+    fechaExpiracion: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+  }
+
+  export type SesionUpdateWithoutUsuarioInput = {
+    token?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaExpiracion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SesionUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaExpiracion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SesionUncheckedUpdateManyWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaExpiracion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReservaCreateManyClienteInput = {
@@ -5698,6 +9858,9 @@ export namespace Prisma {
     fechaHora: Date | string
     numeroPersonas: number
     estado?: $Enums.EstadoReserva
+    comentarios?: string | null
+    preferenciaZona?: $Enums.ZonaPreferida
+    motivoCancelacion?: string | null
     createdAt?: Date | string
   }
 
@@ -5705,6 +9868,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     mesa?: MesaUpdateOneRequiredWithoutReservasNestedInput
   }
@@ -5715,6 +9881,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5724,6 +9893,9 @@ export namespace Prisma {
     fechaHora?: DateTimeFieldUpdateOperationsInput | Date | string
     numeroPersonas?: IntFieldUpdateOperationsInput | number
     estado?: EnumEstadoReservaFieldUpdateOperationsInput | $Enums.EstadoReserva
+    comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    preferenciaZona?: EnumZonaPreferidaFieldUpdateOperationsInput | $Enums.ZonaPreferida
+    motivoCancelacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

@@ -25,10 +25,15 @@ function combineDateTime(dateStr, timeStr) {
   return dayjs(`${dateStr}T${timeStr}:00`).second(0).millisecond(0);
 }
 
+function isDateTimeInPast(dateStr, timeStr) {
+  const value = dayjs(`${dateStr}T${timeStr}`);
+  return value.isValid() && value.isBefore(dayjs(), 'minute');
+}
+
 module.exports = {
   parseTimeToMinutes,
   minutesToTimeStr,
   buildTimeSlots,
   combineDateTime,
+  isDateTimeInPast,
 };
-

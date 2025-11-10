@@ -4,7 +4,7 @@ const { buildTimeSlots, combineDateTime } = require('../utils/datetime');
 
 function getConfig() {
   return {
-    start: process.env.WORK_HOURS_START || '12:00',
+    start: process.env.WORK_HOURS_START || '08:00',
     end: process.env.WORK_HOURS_END || '22:00',
     stepMinutes: Number(process.env.TIME_SLOT_MINUTES || 30),
   };
@@ -65,4 +65,3 @@ module.exports = {
   isTableAvailable,
   isWithinWorkingHours,
 };
-

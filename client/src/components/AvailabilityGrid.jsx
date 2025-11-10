@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 
 export function AvailabilityGrid({ availability }) {
   const timeSlots = useMemo(() => {
@@ -55,4 +55,5 @@ export function AvailabilityGrid({ availability }) {
     </div>
   );
 }
+
 

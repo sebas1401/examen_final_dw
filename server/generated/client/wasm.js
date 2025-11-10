@@ -97,8 +97,29 @@ exports.Prisma.MesaScalarFieldEnum = {
   ubicacion: 'ubicacion'
 };
 
+exports.Prisma.UsuarioScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  email: 'email',
+  password: 'password',
+  telefono: 'telefono',
+  rol: 'rol',
+  fechaRegistro: 'fechaRegistro',
+  activo: 'activo',
+  tokenRecuperacion: 'tokenRecuperacion',
+  emailVerificado: 'emailVerificado',
+  avatarUrl: 'avatarUrl'
+};
+
 exports.Prisma.ClienteScalarFieldEnum = {
   id: 'id',
+  usuarioId: 'usuarioId',
+  puntosFidelidad: 'puntosFidelidad',
+  nivelCliente: 'nivelCliente',
+  preferencias: 'preferencias',
+  ultimaVisita: 'ultimaVisita',
+  totalReservas: 'totalReservas',
+  reservasCanceladas: 'reservasCanceladas',
   nombre: 'nombre',
   telefono: 'telefono',
   email: 'email',
@@ -112,7 +133,20 @@ exports.Prisma.ReservaScalarFieldEnum = {
   fechaHora: 'fechaHora',
   numeroPersonas: 'numeroPersonas',
   estado: 'estado',
+  comentarios: 'comentarios',
+  preferenciaZona: 'preferenciaZona',
+  motivoCancelacion: 'motivoCancelacion',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.SesionScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  token: 'token',
+  fechaCreacion: 'fechaCreacion',
+  fechaExpiracion: 'fechaExpiracion',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent'
 };
 
 exports.Prisma.SortOrder = {
@@ -120,20 +154,56 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+exports.Rol = exports.$Enums.Rol = {
+  ADMIN: 'ADMIN',
+  CLIENTE: 'CLIENTE'
+};
+
+exports.NivelCliente = exports.$Enums.NivelCliente = {
+  NUEVO: 'NUEVO',
+  FRECUENTE: 'FRECUENTE',
+  VIP: 'VIP'
+};
+
 exports.EstadoReserva = exports.$Enums.EstadoReserva = {
   CONFIRMADA: 'CONFIRMADA',
   CANCELADA: 'CANCELADA',
   COMPLETADA: 'COMPLETADA'
 };
 
+exports.ZonaPreferida = exports.$Enums.ZonaPreferida = {
+  SIN_PREFERENCIA: 'SIN_PREFERENCIA',
+  TERRAZA: 'TERRAZA',
+  INTERIOR: 'INTERIOR',
+  VIP: 'VIP'
+};
+
 exports.Prisma.ModelName = {
   Mesa: 'Mesa',
+  Usuario: 'Usuario',
   Cliente: 'Cliente',
-  Reserva: 'Reserva'
+  Reserva: 'Reserva',
+  Sesion: 'Sesion'
 };
 /**
  * Create the Client
@@ -164,7 +234,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
@@ -183,13 +253,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Mesa {\n  id        Int       @id @default(autoincrement())\n  numero    Int       @unique\n  capacidad Int\n  ubicacion String\n  reservas  Reserva[]\n}\n\nmodel Cliente {\n  id        Int       @id @default(autoincrement())\n  nombre    String\n  telefono  String\n  email     String?   @unique\n  reservas  Reserva[]\n  createdAt DateTime  @default(now())\n}\n\nenum EstadoReserva {\n  CONFIRMADA\n  CANCELADA\n  COMPLETADA\n}\n\nmodel Reserva {\n  id             Int           @id @default(autoincrement())\n  clienteId      Int\n  mesaId         Int\n  fechaHora      DateTime\n  numeroPersonas Int\n  estado         EstadoReserva @default(CONFIRMADA)\n  createdAt      DateTime      @default(now())\n\n  cliente Cliente @relation(fields: [clienteId], references: [id])\n  mesa    Mesa    @relation(fields: [mesaId], references: [id])\n\n  @@unique([mesaId, fechaHora])\n  @@index([fechaHora])\n  @@index([clienteId])\n}\n",
-  "inlineSchemaHash": "9b7c2178eae89153a494d39df6d0b351e85144202d4f571d0176ef9fa4a9874e",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Mesa {\n  id        Int       @id @default(autoincrement())\n  numero    Int       @unique\n  capacidad Int\n  ubicacion String\n  reservas  Reserva[]\n}\n\nmodel Usuario {\n  id                Int      @id @default(autoincrement())\n  nombre            String\n  email             String   @unique\n  password          String\n  telefono          String\n  rol               Rol      @default(CLIENTE)\n  fechaRegistro     DateTime @default(now())\n  activo            Boolean  @default(true)\n  tokenRecuperacion String?\n  emailVerificado   Boolean  @default(false)\n  avatarUrl         String?\n  cliente           Cliente?\n  sesiones          Sesion[]\n}\n\nenum Rol {\n  ADMIN\n  CLIENTE\n}\n\nenum NivelCliente {\n  NUEVO\n  FRECUENTE\n  VIP\n}\n\nmodel Cliente {\n  id                 Int          @id @default(autoincrement())\n  usuarioId          Int          @unique\n  puntosFidelidad    Int          @default(0)\n  nivelCliente       NivelCliente @default(NUEVO)\n  preferencias       Json?\n  ultimaVisita       DateTime?\n  totalReservas      Int          @default(0)\n  reservasCanceladas Int          @default(0)\n  nombre             String?\n  telefono           String?\n  email              String?\n  usuario            Usuario      @relation(fields: [usuarioId], references: [id])\n  reservas           Reserva[]\n  createdAt          DateTime     @default(now())\n}\n\nenum EstadoReserva {\n  CONFIRMADA\n  CANCELADA\n  COMPLETADA\n}\n\nenum ZonaPreferida {\n  SIN_PREFERENCIA\n  TERRAZA\n  INTERIOR\n  VIP\n}\n\nmodel Reserva {\n  id                Int           @id @default(autoincrement())\n  clienteId         Int\n  mesaId            Int\n  fechaHora         DateTime\n  numeroPersonas    Int\n  estado            EstadoReserva @default(CONFIRMADA)\n  comentarios       String?\n  preferenciaZona   ZonaPreferida @default(SIN_PREFERENCIA)\n  motivoCancelacion String?\n  createdAt         DateTime      @default(now())\n\n  cliente Cliente @relation(fields: [clienteId], references: [id])\n  mesa    Mesa    @relation(fields: [mesaId], references: [id])\n\n  @@unique([mesaId, fechaHora])\n  @@index([fechaHora])\n  @@index([clienteId])\n}\n\nmodel Sesion {\n  id              Int      @id @default(autoincrement())\n  usuarioId       Int\n  token           String   @unique\n  fechaCreacion   DateTime @default(now())\n  fechaExpiracion DateTime\n  ipAddress       String?\n  userAgent       String?\n  usuario         Usuario  @relation(fields: [usuarioId], references: [id])\n}\n",
+  "inlineSchemaHash": "f368e1e2c850ff96292932fb89ab3b046c8caff6a61a7a74192dfd62a736b19d",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Mesa\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"numero\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"capacidad\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"ubicacion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reservas\",\"kind\":\"object\",\"type\":\"Reserva\",\"relationName\":\"MesaToReserva\"}],\"dbName\":null},\"Cliente\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"telefono\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reservas\",\"kind\":\"object\",\"type\":\"Reserva\",\"relationName\":\"ClienteToReserva\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Reserva\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"clienteId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"mesaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"fechaHora\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"numeroPersonas\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"estado\",\"kind\":\"enum\",\"type\":\"EstadoReserva\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"cliente\",\"kind\":\"object\",\"type\":\"Cliente\",\"relationName\":\"ClienteToReserva\"},{\"name\":\"mesa\",\"kind\":\"object\",\"type\":\"Mesa\",\"relationName\":\"MesaToReserva\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Mesa\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"numero\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"capacidad\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"ubicacion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reservas\",\"kind\":\"object\",\"type\":\"Reserva\",\"relationName\":\"MesaToReserva\"}],\"dbName\":null},\"Usuario\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"telefono\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rol\",\"kind\":\"enum\",\"type\":\"Rol\"},{\"name\":\"fechaRegistro\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"activo\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"tokenRecuperacion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerificado\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"avatarUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"cliente\",\"kind\":\"object\",\"type\":\"Cliente\",\"relationName\":\"ClienteToUsuario\"},{\"name\":\"sesiones\",\"kind\":\"object\",\"type\":\"Sesion\",\"relationName\":\"SesionToUsuario\"}],\"dbName\":null},\"Cliente\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"puntosFidelidad\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nivelCliente\",\"kind\":\"enum\",\"type\":\"NivelCliente\"},{\"name\":\"preferencias\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"ultimaVisita\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"totalReservas\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"reservasCanceladas\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"telefono\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"usuario\",\"kind\":\"object\",\"type\":\"Usuario\",\"relationName\":\"ClienteToUsuario\"},{\"name\":\"reservas\",\"kind\":\"object\",\"type\":\"Reserva\",\"relationName\":\"ClienteToReserva\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Reserva\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"clienteId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"mesaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"fechaHora\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"numeroPersonas\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"estado\",\"kind\":\"enum\",\"type\":\"EstadoReserva\"},{\"name\":\"comentarios\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"preferenciaZona\",\"kind\":\"enum\",\"type\":\"ZonaPreferida\"},{\"name\":\"motivoCancelacion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"cliente\",\"kind\":\"object\",\"type\":\"Cliente\",\"relationName\":\"ClienteToReserva\"},{\"name\":\"mesa\",\"kind\":\"object\",\"type\":\"Mesa\",\"relationName\":\"MesaToReserva\"}],\"dbName\":null},\"Sesion\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechaCreacion\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fechaExpiracion\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"ipAddress\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userAgent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"usuario\",\"kind\":\"object\",\"type\":\"Usuario\",\"relationName\":\"SesionToUsuario\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

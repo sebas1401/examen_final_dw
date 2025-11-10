@@ -125,8 +125,29 @@ exports.Prisma.MesaScalarFieldEnum = {
   ubicacion: 'ubicacion'
 };
 
+exports.Prisma.UsuarioScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  email: 'email',
+  password: 'password',
+  telefono: 'telefono',
+  rol: 'rol',
+  fechaRegistro: 'fechaRegistro',
+  activo: 'activo',
+  tokenRecuperacion: 'tokenRecuperacion',
+  emailVerificado: 'emailVerificado',
+  avatarUrl: 'avatarUrl'
+};
+
 exports.Prisma.ClienteScalarFieldEnum = {
   id: 'id',
+  usuarioId: 'usuarioId',
+  puntosFidelidad: 'puntosFidelidad',
+  nivelCliente: 'nivelCliente',
+  preferencias: 'preferencias',
+  ultimaVisita: 'ultimaVisita',
+  totalReservas: 'totalReservas',
+  reservasCanceladas: 'reservasCanceladas',
   nombre: 'nombre',
   telefono: 'telefono',
   email: 'email',
@@ -140,7 +161,20 @@ exports.Prisma.ReservaScalarFieldEnum = {
   fechaHora: 'fechaHora',
   numeroPersonas: 'numeroPersonas',
   estado: 'estado',
+  comentarios: 'comentarios',
+  preferenciaZona: 'preferenciaZona',
+  motivoCancelacion: 'motivoCancelacion',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.SesionScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  token: 'token',
+  fechaCreacion: 'fechaCreacion',
+  fechaExpiracion: 'fechaExpiracion',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent'
 };
 
 exports.Prisma.SortOrder = {
@@ -148,20 +182,56 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+exports.Rol = exports.$Enums.Rol = {
+  ADMIN: 'ADMIN',
+  CLIENTE: 'CLIENTE'
+};
+
+exports.NivelCliente = exports.$Enums.NivelCliente = {
+  NUEVO: 'NUEVO',
+  FRECUENTE: 'FRECUENTE',
+  VIP: 'VIP'
+};
+
 exports.EstadoReserva = exports.$Enums.EstadoReserva = {
   CONFIRMADA: 'CONFIRMADA',
   CANCELADA: 'CANCELADA',
   COMPLETADA: 'COMPLETADA'
 };
 
+exports.ZonaPreferida = exports.$Enums.ZonaPreferida = {
+  SIN_PREFERENCIA: 'SIN_PREFERENCIA',
+  TERRAZA: 'TERRAZA',
+  INTERIOR: 'INTERIOR',
+  VIP: 'VIP'
+};
+
 exports.Prisma.ModelName = {
   Mesa: 'Mesa',
+  Usuario: 'Usuario',
   Cliente: 'Cliente',
-  Reserva: 'Reserva'
+  Reserva: 'Reserva',
+  Sesion: 'Sesion'
 };
 
 /**
